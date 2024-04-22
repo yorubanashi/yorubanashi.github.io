@@ -1,3 +1,5 @@
+export const prerender = true;
+
 import type { SongResponse } from "$lib/types/songs";
 
 export async function load({ fetch }) {
@@ -8,5 +10,3 @@ export async function load({ fetch }) {
   }
   return data;
 }
-
-export const prerender = true;

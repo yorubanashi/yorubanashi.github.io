@@ -48,6 +48,9 @@
   a {
     color: black;
     text-decoration: none;
+    text-align: center;
+
+    font-size: 1.25em;
   }
 
   a:hover {
