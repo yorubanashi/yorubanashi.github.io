@@ -12,12 +12,18 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-const (
-	songsPath   = "data/songs/"
-	indexedFile = "indexed.yaml"
+var (
+	basePath      = "data"
+	songsPath     = fmt.Sprintf("%s/songs", basePath)
+	songIndexFile = fmt.Sprintf("%s/indexed.yaml", songsPath)
+	artistFile    = fmt.Sprintf("%s/artists.yaml", basePath)
 )
 
 type Chinese struct {
+	CN string `yaml:"cn" json:"cn"` // Chinese (China)
+	TW string `yaml:"tw" json:"tw"` // Chinese (Taiwan)
+	LA string `yaml:"la" json:"la"` // Latin / Romanized
+	EN string `yaml:"en" json:"en"` // English
 }
 
 type Song struct {
@@ -30,31 +36,38 @@ type SongResponse struct {
 	Error error  `json:"error,omitempty"`
 }
 
+type ArtistResponse struct {
+	Artists []Chinese `json:"artists,omitempty"`
+	Error   error     `json:"error,omitempty"`
+}
+
 // writeJSON will attempt to convert 'data' into JSON and write it to http.ResponseWriter.
 //
 // If unsuccessful, it will instead write a 500 Internal Server Error.
 func writeJSON(w http.ResponseWriter, statusCode int, data any) {
 	out, err := json.Marshal(data)
 	if err != nil {
+		errorStr := fmt.Sprintf("error marshalling JSON: %s", err.Error())
 		w.WriteHeader(500)
-		w.Write([]byte("Internal Server Error"))
+		w.Write([]byte(errorStr))
 	} else {
 		w.WriteHeader(statusCode)
 		w.Write(out)
 	}
 }
 
-func allSongs(w http.ResponseWriter, r *http.Request) {
-	res := SongResponse{}
-	filePath := songsPath + indexedFile
-	data, err := os.ReadFile(filePath)
+func readYAML(filepath string, obj interface{}) error {
+	data, err := os.ReadFile(filepath)
 	if err != nil {
-		res.Error = err
-		writeJSON(w, 500, res)
-		return
+		return err
 	}
 
-	err = yaml.Unmarshal(data, &res.Songs)
+	return yaml.Unmarshal(data, obj)
+}
+
+func allSongs(w http.ResponseWriter, r *http.Request) {
+	res := SongResponse{}
+	err := readYAML(songIndexFile, &res.Songs)
 	if err != nil {
 		res.Error = err
 		writeJSON(w, 500, res)
@@ -73,6 +86,19 @@ func songHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		w.WriteHeader(404)
 	}
+}
+
+func artistHandler(w http.ResponseWriter, r *http.Request) {
+	res := ArtistResponse{}
+	err := readYAML(artistFile, &res.Artists)
+	if err != nil {
+		res.Error = err
+		writeJSON(w, 500, res)
+		return
+	}
+
+	writeJSON(w, 200, res)
+	return
 }
 
 // index walks through the data/songs directory and saves an appendix in another file.
@@ -101,8 +127,7 @@ func index() {
 		log.Fatal(err)
 	}
 
-	filePath := songsPath + indexedFile
-	file, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
+	file, err := os.OpenFile(songIndexFile, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -140,6 +165,7 @@ func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/songs/", middleware(songHandler))
 	mux.HandleFunc("/songs", middleware(songHandler))
+	mux.HandleFunc("/artists", middleware(artistHandler))
 
 	addr := ":8080"
 	fmt.Println(fmt.Sprintf("Starting server on %s...", addr))

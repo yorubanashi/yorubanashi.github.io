@@ -13,6 +13,7 @@
 
 <div id="container">
   <div id="middle">
+    <!-- TODO: Add a settings icon to the right + create a modal -->
     <div class="search-bar">
       <input type="text" class="search-input" placeholder="Search (Not Functional)">
       <!-- SVG stolen from YouTube's search bar -->

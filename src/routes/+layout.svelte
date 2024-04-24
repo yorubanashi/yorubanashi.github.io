@@ -8,4 +8,8 @@
     font-size: 16px;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
   }
+
+  :global(input[type="text"]) {
+    font-size: inherit;
+  }
 </style>
