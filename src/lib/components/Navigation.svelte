@@ -10,9 +10,11 @@
 
 <script lang="ts">
   export let links: Link[];
+  export let title: string = "Navigation";
 </script>
 
 <div id="container">
+  <h1>{ title }</h1>
   <div>
     <ul>
       {#each links as link}
@@ -30,14 +32,21 @@
     width: 100dvw;
 
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 
-    font-family: 'Courier New', Courier, monospace;
+    /* font-family: 'Courier New', Courier, monospace; */
+  }
+
+  h1 {
+    margin: 0;
+    padding: 0.5rem 0;
   }
 
   ul {
-    padding: 0;
+    margin: 0;
+    padding: 0.5rem;
     list-style-type: none;
   }
 
@@ -46,15 +55,14 @@
   }
 
   a {
-    color: black;
+    color: var(--font-color);
     text-decoration: none;
     text-align: center;
 
-    font-size: 1.25em;
+    /* font-size: 1.25em; */
   }
 
   a:hover {
     cursor: pointer;
-    color: blue;
   }
 </style>

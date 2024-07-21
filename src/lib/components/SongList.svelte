@@ -12,10 +12,11 @@
 </script>
 
 <div id="container">
+  <h1>歌单</h1>
   <div id="middle">
     <!-- TODO: Add a settings icon to the right + create a modal -->
     <div class="search-bar">
-      <input type="text" class="search-input" placeholder="Search (Not Functional)">
+      <input type="text" class="search-input" placeholder="搜索（没准备好）">
       <!-- SVG stolen from YouTube's search bar -->
       <svg
         class="search-icon"
@@ -48,7 +49,14 @@
     width: 100dvw;
 
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+  }
+
+  h1 {
+    margin: 0;
+    margin-top: 8px;
   }
 
   #middle {
@@ -69,19 +77,23 @@
     width: 100%;
     padding: 10px 20px 10px 40px;
 
+    background-color: transparent;
     border: 1px solid #ccc;
     border-radius: 20px;
-    /* outline: none; */
+    outline: none;
+
+    caret-color: rgb(241, 241, 241);
+    color: rgba(255, 255, 255, 0.88);
   }
 
   .search-icon {
     position: absolute;
-    left: 18px;
+    left: 20px;
     top: 50%;
     transform: translateY(-50%);
     width: 20px;
     height: 20px;
-    stroke: black;
+    stroke: var(--font-color);
   }
 
   /* Actual list CSS styles */
@@ -105,12 +117,12 @@
   }
 
   a {
-    color: black;
+    color: var(--font-color);
     text-decoration: none;
   }
 
   .secondary {
-    color: gray;
-    font-size: 0.8em;
+    color: var(--font-color-secondary);
+    font-size: 1rem;
   }
 </style>
