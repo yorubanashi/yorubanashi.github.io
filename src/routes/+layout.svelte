@@ -8,6 +8,7 @@
   }
 
   :global(body) {
+    scrollbar-color: rgb(170, 170, 170);
     margin: 0;
 
     background-color: rgb(15, 15, 15);

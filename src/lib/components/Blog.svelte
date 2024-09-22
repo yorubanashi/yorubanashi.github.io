@@ -1,5 +1,35 @@
 <script lang="ts">
+  // Workaround for a11y warning...
+  const escapeHatch = "#";
 
+  // Order translation toggle list items
+  import { page } from '$app/stores';
+  interface tl {
+    prefix: string;
+    name: string;
+  }
+  const tlList: tl[] = [
+    { prefix: "/cn", name: "中文" },
+    { prefix: "/jp", name: "日本語" },
+    { prefix: "/", name: "English" },
+];
+  const [tlFirst, tlRest] = ((): [tl | undefined, tl[]] => {
+    let x: tl | undefined = undefined;
+    let y: tl[] = [];
+    tlList.forEach((ele) => {
+      // TODO: Make this logic cleaner?
+      if ($page.url.pathname.includes(ele.prefix) && x === undefined) {
+        x = ele
+      } else {
+        y.push(ele)
+      }
+    });
+    return [x, y];
+  })();
+
+  // Control "translation" toggle
+  let translateCollapse: boolean = false;
+  const toggleTranslateCollapse = () => { translateCollapse = !translateCollapse };
 </script>
 
 <div id="blog">
@@ -12,16 +42,23 @@
       <div>
         <ul id="translate-list">
           <li>
-            <div class="flex justify-between">
+            <a href={escapeHatch} on:click={toggleTranslateCollapse} class="flex justify-between">
               <div class="flex align-center">
                 <svg id="translate-icon" viewBox="0 0 24 24"><use href="/translate.svg#translate" /></svg>
-                <div>English</div>
+                <div>{tlFirst?.name}</div>
               </div>
-              <div>▸▾</div>
-            </div>
+              {#if translateCollapse}
+                <div>▾</div>
+              {:else}
+                <div>▸</div>
+              {/if}
+            </a>
           </li>
-          <li>Chinese</li>
-          <li>Japanese</li>
+          {#if translateCollapse}
+            {#each tlRest as ele}
+              <li><a href={ele.prefix}>{ele.name}</a></li>
+            {/each}
+          {/if}
         </ul>
       </div>
       <div>
@@ -57,6 +94,16 @@
     border-radius: .25rem;
     box-sizing: border-box;
     background-color: rgb(30, 30, 30);
+  }
+
+  #menu a {
+    display: flex;
+    text-decoration: none;
+    color: var(--font-color);
+  }
+
+  #menu a:hover {
+    color: var(--font-color-secondary);
   }
 
   #menu ul {
