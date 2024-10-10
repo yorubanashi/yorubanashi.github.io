@@ -1,6 +1,6 @@
 <script lang="ts">
   // Workaround for a11y warning...
-  const escapeHatch = "#";
+  const escapeHatch = "javascript:void(0)";
 
   // Order translation toggle list items
   import { page } from '$app/stores';
@@ -12,7 +12,7 @@
     { prefix: "/cn", name: "中文" },
     { prefix: "/jp", name: "日本語" },
     { prefix: "/", name: "English" },
-];
+  ];
   const [tlFirst, tlRest] = ((): [tl | undefined, tl[]] => {
     let x: tl | undefined = undefined;
     let y: tl[] = [];
@@ -30,6 +30,8 @@
   // Control "translation" toggle
   let translateCollapse: boolean = false;
   const toggleTranslateCollapse = () => { translateCollapse = !translateCollapse };
+
+  // TODO: Dynamically load content here. API call to language server, which will scan folder and populate.
 </script>
 
 <div id="blog">
@@ -37,7 +39,7 @@
     <div id="menu-content">
       <h2>Title</h2>
       <div>
-        <input type="text" placeholder="Search" />
+        <input type="text" placeholder="[WIP] Search" />
       </div>
       <div>
         <ul id="translate-list">

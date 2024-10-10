@@ -1,8 +1,2 @@
-<script lang="ts">
-  import Blog from "$lib/components/Blog.svelte";
-</script>
-
-<Blog>
-  <h1>Page Title</h1>
-  <p>Here contains a bunch of content, lorem ipsum.</p>
-</Blog>
+<h1>Home</h1>
+<p>There's nothing here! Check out the menu for relevant links.</p>
