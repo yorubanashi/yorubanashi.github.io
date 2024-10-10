@@ -2,36 +2,42 @@
   // Workaround for a11y warning...
   const escapeHatch = "javascript:void(0)";
 
-  // Order translation toggle list items
+  import { afterNavigate } from '$app/navigation';
   import { page } from '$app/stores';
-  interface tl {
-    prefix: string;
-    name: string;
-  }
-  const tlList: tl[] = [
-    { prefix: "/cn", name: "中文" },
-    { prefix: "/jp", name: "日本語" },
-    { prefix: "/", name: "English" },
-  ];
-  const [tlFirst, tlRest] = ((): [tl | undefined, tl[]] => {
-    let x: tl | undefined = undefined;
-    let y: tl[] = [];
-    tlList.forEach((ele) => {
+  import { type Language, LanguageList } from '$lib/consts/languages';
+
+  // sl = selected language, ol = other languages
+  let sl: Language;
+  let ol: Language[];
+  let translateCollapse: boolean = false;
+  const refreshLanguageList = (): [Language, Language[]] => {
+    translateCollapse = false;
+    let selected: Language | null = null;
+    let others: Language[] = [];
+    LanguageList.forEach((ele) => {
       // TODO: Make this logic cleaner?
-      if ($page.url.pathname.includes(ele.prefix) && x === undefined) {
-        x = ele
+      if ($page.url.pathname.includes(ele.linkPrefix) && selected === null) {
+        selected = ele
       } else {
-        y.push(ele)
+        others.push(ele)
       }
     });
-    return [x, y];
-  })();
+
+    // TODO: Fix hack to get around typing.
+    if (selected === null) {
+      selected = LanguageList[2];
+    }
+    return [selected, others];
+  };
+
+  [sl, ol] = refreshLanguageList();
+  afterNavigate(() => { [sl, ol] = refreshLanguageList(); });
 
   // Control "translation" toggle
-  let translateCollapse: boolean = false;
   const toggleTranslateCollapse = () => { translateCollapse = !translateCollapse };
 
-  // TODO: Dynamically load content here. API call to language server, which will scan folder and populate.
+  import type { Dir } from "$lib/types/svelte";
+  export let dir: Dir;
 </script>
 
 <div id="blog">
@@ -47,7 +53,7 @@
             <a href={escapeHatch} on:click={toggleTranslateCollapse} class="flex justify-between">
               <div class="flex align-center">
                 <svg id="translate-icon" viewBox="0 0 24 24"><use href="/translate.svg#translate" /></svg>
-                <div>{tlFirst?.name}</div>
+                <div>{sl.name}</div>
               </div>
               {#if translateCollapse}
                 <div>▾</div>
@@ -57,15 +63,19 @@
             </a>
           </li>
           {#if translateCollapse}
-            {#each tlRest as ele}
-              <li><a href={ele.prefix}>{ele.name}</a></li>
+            {#each ol as ele}
+              <li><a href={ele.linkPrefix}>{ele.name}</a></li>
             {/each}
           {/if}
         </ul>
       </div>
       <div>
         <ul>
-          <li>English Page</li>
+          {#if dir.dirs !== undefined}
+            {#each Object.entries(dir.dirs) as nav}
+              <li>{ nav[1].link.name }</li>
+            {/each}
+          {/if}
         </ul>
       </div>
     </div>

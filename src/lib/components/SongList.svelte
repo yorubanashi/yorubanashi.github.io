@@ -30,7 +30,7 @@
     <div id="listContainer">
       {#each songs as song}
         <div class="song">
-          <a href={`/chinese/songs/${song.title}`}>
+          <a href={`/cn/songs/${song.title}`}>
             <div>
               <div>{song.title}</div>
               <div class="secondary">{song.artist}</div>

@@ -3,17 +3,10 @@
   import type { Dir, SvelteWalkResponse } from "$lib/types/svelte";
 
   export let data: SvelteWalkResponse;
-  const dirs: { [name: string]: Dir } = data.dir.dirs;
-  console.log(dirs);
 </script>
 
-<Blog>
+<Blog dir={data.dir}>
   <slot />
-  {#if dirs !== undefined}
-    {#each Object.entries(dirs) as dir}
-    <div>{ dir[1].link.name }</div>
-    {/each}
-  {/if}
 </Blog>
 
 <style>

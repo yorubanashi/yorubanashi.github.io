@@ -1,25 +1,14 @@
 // Static: This can be false if you're using a fallback (i.e. SPA mode)
 export const prerender = true;
-export const ssr = false
 
+import { LanguageList } from '$lib/consts/languages';
 import type { SvelteWalkResponse } from "$lib/types/svelte";
 
 export async function load({ fetch, url }) {
-  // TODO: Reduce duplication here with Blog.svelte
-  // Order translation toggle list items
-  interface tl {
-    prefix: string;
-    name: string;
-  }
-  const tlList: tl[] = [
-    { prefix: "/cn", name: "cn" },
-    { prefix: "/jp", name: "jp" },
-    { prefix: "/", name: "en" },
-  ];
   const lang = ((): string => {
-    for (let ele of tlList) {
-      if (url.pathname.includes(ele.prefix)) {
-        return ele.name;
+    for (let ele of LanguageList) {
+      if (url.pathname.includes(ele.linkPrefix)) {
+        return ele.apiPrefix;
       }
     }
 
