@@ -2,24 +2,24 @@
 export const prerender = true;
 
 import { LanguageList } from '$lib/consts/languages';
-import type { SvelteWalkResponse } from "$lib/types/svelte";
+import type { SvelteWalkResponse } from '$lib/types/svelte';
 
 export async function load({ fetch, url }) {
-  const lang = ((): string => {
-    for (let ele of LanguageList) {
-      if (url.pathname.includes(ele.linkPrefix)) {
-        return ele.apiPrefix;
-      }
-    }
+	const lang = ((): string => {
+		for (let ele of LanguageList) {
+			if (url.pathname.includes(ele.linkPrefix)) {
+				return ele.apiPrefix;
+			}
+		}
 
-    // Fallback to EN, I guess...
-    return "en";
-  })();
+		// Fallback to EN, I guess...
+		return 'en';
+	})();
 
-  const response = await fetch(`/api/svelte/${lang}`);
-  const data: SvelteWalkResponse = await response.json();
-  if (data.error !== undefined) {
-    throw new Error("Contact the developer. We shouldn't be here.")
-  }
-  return data;
+	const response = await fetch(`/api/svelte/${lang}`);
+	const data: SvelteWalkResponse = await response.json();
+	if (data.error !== undefined) {
+		throw new Error("Contact the developer. We shouldn't be here.");
+	}
+	return data;
 }

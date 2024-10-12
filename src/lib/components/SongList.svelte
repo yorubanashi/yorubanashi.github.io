@@ -6,123 +6,152 @@
 -->
 
 <script lang="ts">
-  import type { Song } from "$lib/types/songs";
+	import { goto } from '$app/navigation';
+	import type { Song } from '$lib/types/songs';
 
-  export let songs: Song[];
+	export let songs: Song[];
 </script>
 
 <div id="container">
-  <h1>歌单</h1>
-  <div id="middle">
-    <!-- TODO: Add a settings icon to the right + create a modal -->
-    <div class="search-bar">
-      <input type="text" class="search-input" placeholder="搜索（没准备好）">
-      <!-- SVG stolen from YouTube's search bar -->
-      <svg
-        class="search-icon"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24" focusable="false"
-      >
-        <path d="m20.87 20.17-5.59-5.59C16.35 13.35 17 11.75 17 10c0-3.87-3.13-7-7-7s-7 3.13-7 7 3.13 7 7 7c1.75 0 3.35-.65 4.58-1.71l5.59 5.59.7-.71zM10 16c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"></path>
-      </svg>
-    </div>
+	<h1>歌单</h1>
+	<div id="middle">
+		<!-- TODO: Add a settings icon to the right + create a modal -->
+		<div class="search-bar">
+			<input type="text" class="search-input" placeholder="搜索（没准备好）" />
+			<!-- SVG stolen from YouTube's search bar -->
+			<svg
+				class="search-icon"
+				xmlns="http://www.w3.org/2000/svg"
+				viewBox="0 0 24 24"
+				focusable="false"
+			>
+				<path
+					d="m20.87 20.17-5.59-5.59C16.35 13.35 17 11.75 17 10c0-3.87-3.13-7-7-7s-7 3.13-7 7 3.13 7 7 7c1.75 0 3.35-.65 4.58-1.71l5.59 5.59.7-.71zM10 16c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"
+				></path>
+			</svg>
+		</div>
 
-    <div id="listContainer">
-      {#each songs as song}
-        <div class="song">
-          <a href={`/cn/songs/${song.title}`}>
-            <div>
-              <div>{song.title}</div>
-              <div class="secondary">{song.artist}</div>
-            </div>
-          </a>
-        </div>
-      {/each}
-    </div>
-  </div>
+		<div id="listContainer">
+			<table>
+				<thead>
+					<td>Song</td>
+					<td>Artist</td>
+				</thead>
+
+				<tbody>
+					{#each songs as song}
+						<tr
+							class="song"
+							on:click={() => {
+								goto(`/cn/songs/${song.title}`);
+							}}
+						>
+							<td>{song.title}</td>
+							<td>{song.artist}</td>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+		</div>
+	</div>
 </div>
 
-
 <style>
-  #container {
-    height: 100dvh;
-    width: 100dvw;
+  /* in-development styles (everything before #container) */
+	table {
+		width: 100%;
+    border-collapse: collapse;
+	}
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* justify-content: center; */
+  tr {
+    cursor: pointer;
   }
 
-  h1 {
-    margin: 0;
-    margin-top: 8px;
+  thead td {
+    padding: 0.125rem 0.5rem;
   }
 
-  #middle {
-    width: 100%;
-    max-width: 640px;
+	td {
+		width: 100px;
+		height: 24px;
+		vertical-align: middle;
+
+    padding: 0.25rem 0.5rem;
+	}
+
+  /* Use a class instead of selecting by child, and figur eout better width */
+  tr td:first-child {
+    width: 100px;
   }
 
-  /* Search bar CSS styles */
-  .search-bar {
-    position: relative;
-    box-sizing: border-box;
-    width: 100%;
-    padding: 8px;
+  tbody tr:nth-child(odd) {
+    background-color: rgb(30, 30, 30);
   }
 
-  .search-input {
-    box-sizing: border-box;
-    width: 100%;
-    padding: 10px 20px 10px 40px;
+	.song:hover {
+		background-color: rgb(45, 45, 45);
+	}
 
-    background-color: transparent;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    outline: none;
+	#container {
+		display: flex;
+		flex-direction: column;
 
-    caret-color: rgb(241, 241, 241);
-    color: rgba(255, 255, 255, 0.88);
-  }
+    font-size: 0.875em;
+	}
 
-  .search-icon {
-    position: absolute;
-    left: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 20px;
-    height: 20px;
-    stroke: var(--font-color);
-  }
+	h1 {
+		margin: 0;
+		margin-top: 0.5rem;
+		padding-left: 1rem;
+	}
 
-  /* Actual list CSS styles */
-  #listContainer {
-    padding: 8px;
-    padding-top: 0px;
+	#middle {
+		width: 100%;
+		/* max-width: 640px; */
+	}
 
-    border-radius: 8px;
-  }
+	/* Search bar CSS styles */
+	.search-bar {
+		position: relative;
+		box-sizing: border-box;
+		width: 100%;
+		padding: 0.5rem;
+	}
 
-  .song {
-    padding: 4px 12px;
-  }
+	.search-input {
+		box-sizing: border-box;
+		width: 100%;
+		padding: 10px 20px 10px 40px;
 
-  .song:hover {
-    background-color: #ebebeb;
-  }
+		background-color: transparent;
+		border: 1px solid #ccc;
+		border-radius: 20px;
+		outline: none;
 
-  .song:not(:last-child) {
-    border-bottom: 1px solid darkgray; /* Change the color and width as needed */
-  }
+		caret-color: rgb(241, 241, 241);
+		color: rgba(255, 255, 255, 0.88);
+	}
 
-  a {
-    color: var(--font-color);
-    text-decoration: none;
-  }
+	.search-icon {
+		position: absolute;
+		left: 20px;
+		top: 50%;
+		transform: translateY(-50%);
+		width: 20px;
+		height: 20px;
+		stroke: var(--font-color);
+	}
 
-  .secondary {
-    color: var(--font-color-secondary);
-    font-size: 1rem;
-  }
+	/* Actual list CSS styles */
+	#listContainer {
+		padding: 0.5rem;
+		padding-top: 0px;
+
+		border-radius: 0.5rem;
+	}
+
+	.secondary {
+		color: var(--font-color-secondary);
+		font-size: 1rem;
+	}
 </style>
