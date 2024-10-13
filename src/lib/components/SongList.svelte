@@ -34,8 +34,8 @@
 		<div id="listContainer">
 			<table>
 				<thead>
-					<td>Song</td>
-					<td>Artist</td>
+					<th class="title-col">标题</th>
+					<th>歌手</th>
 				</thead>
 
 				<tbody>
@@ -57,46 +57,10 @@
 </div>
 
 <style>
-  /* in-development styles (everything before #container) */
-	table {
-		width: 100%;
-    border-collapse: collapse;
-	}
-
-  tr {
-    cursor: pointer;
-  }
-
-  thead td {
-    padding: 0.125rem 0.5rem;
-  }
-
-	td {
-		width: 100px;
-		height: 24px;
-		vertical-align: middle;
-
-    padding: 0.25rem 0.5rem;
-	}
-
-  /* Use a class instead of selecting by child, and figur eout better width */
-  tr td:first-child {
-    width: 100px;
-  }
-
-  tbody tr:nth-child(odd) {
-    background-color: rgb(30, 30, 30);
-  }
-
-	.song:hover {
-		background-color: rgb(45, 45, 45);
-	}
-
 	#container {
 		display: flex;
 		flex-direction: column;
-
-    font-size: 0.875em;
+		/* font-size: 0.875em; */
 	}
 
 	h1 {
@@ -107,7 +71,6 @@
 
 	#middle {
 		width: 100%;
-		/* max-width: 640px; */
 	}
 
 	/* Search bar CSS styles */
@@ -150,8 +113,35 @@
 		border-radius: 0.5rem;
 	}
 
-	.secondary {
+	table {
+		width: 100%;
+		border-collapse: collapse;
+	}
+
+	th {
+		padding: 0.375rem 0.625rem;
+		text-align: left;
+		font-weight: normal;
 		color: var(--font-color-secondary);
-		font-size: 1rem;
+	}
+
+	.title-col {
+		width: 20em;
+	}
+
+	td {
+		height: 24px;
+		vertical-align: middle;
+
+		padding: 0.375rem 0.625rem;
+	}
+
+	tbody tr:nth-child(odd) {
+		background-color: rgb(30, 30, 30);
+	}
+
+	.song:hover {
+		cursor: pointer;
+		background-color: rgb(45, 45, 45);
 	}
 </style>

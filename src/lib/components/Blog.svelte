@@ -1,6 +1,6 @@
 <!-- TODOS -->
 <!-- 1. Refactor out language bar and navigation menu into own components -->
-<!-- 2. Make navigation menu recursive -->
+<!-- 2. Make navigation menu recursive / any functions that use "dir" -->
 
 <script lang="ts">
 	// Workaround for a11y warning...
@@ -47,10 +47,36 @@
 	import type { Dir } from '$lib/types/svelte';
 	export let dir: Dir;
 
-	const relativeLink = (link: string) => {
+	// TODO: Can we avoid the reactive statement here?
+	$: relativeLink = (link: string) => {
 		return `${sl.linkPrefix}/${link}`;
 	};
+
+	// TODO: Same here, can we avoid the reactive statement here?
+	$: findPath = (dir: Dir): string => {
+		// If there's no base page or base directories, then default to something...
+		if (dir.link === undefined) {
+			return '夜噺';
+		} else if (dir.dirs === undefined) {
+			return dir.link.name;
+		}
+
+		const matches = Object.entries(dir.dirs).filter(([_, d]) => {
+			return $page.url.pathname.includes(d.link.addr);
+		});
+		if (matches.length > 0) {
+			console.log(matches);
+			return matches[0][1].link.name;
+		}
+		return dir.link.name;
+	};
 </script>
+
+<svelte:head>
+	<title>
+		{findPath(dir)}
+	</title>
+</svelte:head>
 
 <div id="blog">
 	<aside id="menu">
@@ -85,7 +111,7 @@
 			</div>
 			<div>
 				<ul>
-					{#if dir.dirs !== undefined}
+					{#if sl !== undefined && dir.dirs !== undefined}
 						{#each Object.entries(dir.dirs) as nav}
 							<li><a href={relativeLink(nav[1].link.addr)}>{nav[1].link.name}</a></li>
 						{/each}
@@ -118,7 +144,7 @@
 		padding: 0.5rem;
 		border: 0;
 		border-radius: 0.25rem;
-    outline: none;
+		outline: none;
 		box-sizing: border-box;
 		background-color: rgb(30, 30, 30);
 	}
