@@ -46,7 +46,8 @@
 								goto(`/cn/songs/${song.title}`);
 							}}
 						>
-							<td>{song.title}</td>
+              <!-- Leave <a> here with href for Svelte pre-rendering -->
+							<td><a class="invisible" href={`/cn/songs/${song.title}`}>{song.title}</a></td>
 							<td>{song.artist}</td>
 						</tr>
 					{/each}
@@ -144,4 +145,9 @@
 		cursor: pointer;
 		background-color: rgb(45, 45, 45);
 	}
+
+  a {
+    text-decoration: none;
+    color: var(--font-color);
+  }
 </style>

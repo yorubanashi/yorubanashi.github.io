@@ -11,16 +11,17 @@
 
 <style>
 	:global(:root) {
+    --background-color: rgb(15, 15, 15);
 		--font-family: Roboto, Arial, sans-serif;
 		--font-color: rgb(241, 241, 241);
 		--font-color-secondary: rgb(170, 170, 170);
 	}
 
 	:global(body) {
-		scrollbar-color: rgb(170, 170, 170);
+		scrollbar-color: var(--font-color-secondary);
 		margin: 0;
 
-		background-color: rgb(15, 15, 15);
+		background-color: var(--background-color);
 		font-size: 16px;
 		font-family: var(--font-family);
 		letter-spacing: 0.33px;

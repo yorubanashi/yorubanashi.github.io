@@ -10,6 +10,8 @@
 	import { page } from '$app/stores';
 	import { type Language, LanguageList } from '$lib/consts/languages';
 
+  import type { Action } from "svelte/action";
+
 	// sl = selected language, ol = other languages
 	let sl: Language;
 	let ol: Language[];
@@ -65,21 +67,44 @@
 			return $page.url.pathname.includes(d.link.addr);
 		});
 		if (matches.length > 0) {
-			console.log(matches);
 			return matches[0][1].link.name;
 		}
 		return dir.link.name;
 	};
+
+  // Menu control in mobile
+  let showMenu: boolean = false;
+  const toggleMenu = () => { showMenu = !showMenu; };
+
+  const clickOutside: Action<HTMLElement, () => void>  = (node: HTMLElement, callback: () => void) => {
+    const handleClick = (event: MouseEvent) => {
+      // https://stackoverflow.com/questions/71193818
+      if (!node.contains(event.target as Node)) {
+        // Explicitly define the function in an "outclick" attr:
+        // node.dispatchEvent(new CustomEvent('outclick'));
+        callback();
+      }
+    };
+
+    document.addEventListener('click', handleClick, true);
+
+    return {
+      destroy() {
+        document.removeEventListener('click', handleClick, true);
+      }
+    };
+  }
 </script>
 
 <svelte:head>
 	<title>
-		{findPath(dir)}
+		{ findPath(dir) }
 	</title>
 </svelte:head>
 
 <div id="blog">
-	<aside id="menu">
+  <!-- Figure out how to properly unmount / deregister this function so it's not always active. -->
+	<aside id="menu" use:clickOutside={() => {showMenu = false}} class={ showMenu ? "show" : "" }>
 		<div id="menu-content">
 			<h2>Title</h2>
 			<div>
@@ -90,9 +115,9 @@
 					<li>
 						<a href={escapeHatch} on:click={toggleTranslateCollapse} class="flex justify-between">
 							<div class="flex align-center">
-								<svg id="translate-icon" viewBox="0 0 24 24"
-									><use href="/translate.svg#translate" /></svg
-								>
+								<svg id="translate-icon" viewBox="0 0 24 24">
+                  <use href="/translate.svg#translate" />
+                </svg>
 								<div>{sl.name}</div>
 							</div>
 							{#if translateCollapse}
@@ -120,14 +145,28 @@
 			</div>
 		</div>
 	</aside>
-	<div id="page">
+	<div id="page" class={ showMenu ? "opaque" : "" }>
+    <header id="page-header">
+      <div class="left">
+        <button id="burger-wrapper" on:click={toggleMenu}>
+          <svg id="burger-icon" viewBox="0 0 24 24">
+            <use href="/menu.svg#menu-one" />
+            <use href="/menu.svg#menu-two" />
+            <use href="/menu.svg#menu-three" />
+          </svg>
+        </button>
+      </div>
+      <div class="center">{ findPath(dir) }</div>
+      <div class="right"></div>
+      <div></div>
+    </header>
 		<slot />
 	</div>
 </div>
 
 <style>
 	#blog {
-		width: 76em;
+		max-width: 76em;
 		margin: 0 auto;
 		display: flex;
 	}
@@ -190,5 +229,71 @@
 	#page {
 		flex-grow: 1;
 		padding: 1em;
+	}
+
+  #page-header {
+    display: none;
+  }
+
+  #page-header .left, #page-header .right {
+    flex: 1;
+  }
+
+  /* Media styles */
+
+  @media screen and (max-width: 56rem) {
+    #menu {
+      /* display: none; */
+
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: var(--background-color);
+      transition: .2s ease-in-out;
+      transition-property: transform, margin, opacity, visibility;
+      will-change: transform, margin, opacity;
+      margin-inline-start: -16rem;
+        z-index: 1;
+    }
+
+    #blog .show {
+      display: block;
+      transform: translateX(16rem);
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
+    #page-header { 
+      display: flex;
+    }
+
+    .opaque {
+      opacity: 0.25;
+    }
+
+    #page {
+      transition: .2s ease-in-out;
+    transition-property: transform, margin, opacity, visibility;
+    will-change: transform, margin, opacity;
+    }
+  }
+
+  .left {
+    display: flex;
+    align-items: center;
+  }
+
+  #burger-wrapper {
+    display: flex;
+		background-color: var(--background-color);
+    border: none;
+  }
+  
+	#burger-icon {
+		height: 1em;
+		width: 1em;
+		fill: var(--font-color);
 	}
 </style>
