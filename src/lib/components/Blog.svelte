@@ -37,7 +37,7 @@
 	[sl, ol] = refreshLanguageList();
 	afterNavigate(() => {
 		[sl, ol] = refreshLanguageList();
-    showMenu = false;
+		showMenu = false;
 	});
 
 	// Control "translation" toggle
@@ -71,19 +71,21 @@
 		return dir.link.name;
 	};
 
-  // Menu control in mobile
-  let showMenu: boolean = false;
-  const toggleMenu = () => { showMenu = !showMenu; };
+	// Menu control in mobile
+	let showMenu: boolean = false;
+	const toggleMenu = () => {
+		showMenu = !showMenu;
+	};
 </script>
 
 <svelte:head>
 	<title>
-		{ findPath(dir) }
+		{findPath(dir)}
 	</title>
 </svelte:head>
 
 <div id="blog">
-	<aside id="menu" class={ showMenu ? "show" : "" }>
+	<aside id="menu" class={showMenu ? 'show' : ''}>
 		<div id="menu-content">
 			<h2>Title</h2>
 			<div>
@@ -95,8 +97,8 @@
 						<a href={escapeHatch} on:click={toggleTranslateCollapse} class="flex justify-between">
 							<div class="flex align-center">
 								<svg id="translate-icon" viewBox="0 0 24 24">
-                  <use href="/translate.svg#translate" />
-                </svg>
+									<use href="/translate.svg#translate" />
+								</svg>
 								<div>{sl.name}</div>
 							</div>
 							{#if translateCollapse}
@@ -124,32 +126,38 @@
 			</div>
 		</div>
 	</aside>
-	<div id="page" class={ showMenu ? "opaque" : "" }>
-    <header id="page-header">
-      <div class="left">
-        <button id="burger-wrapper" on:click={toggleMenu}>
-          <svg id="burger-icon" viewBox="0 0 24 24">
-            <use href="/menu.svg#menu-one" />
-            <use href="/menu.svg#menu-two" />
-            <use href="/menu.svg#menu-three" />
-          </svg>
-        </button>
-      </div>
-      <div class="center">{ findPath(dir) }</div>
-      <div class="right"></div>
-      <div></div>
-    </header>
-    <slot />
+	<div id="page" class={showMenu ? 'opaque' : ''}>
+		<header id="page-header">
+			<div class="left">
+				<button id="burger-wrapper" on:click={toggleMenu}>
+					<svg id="burger-icon" viewBox="0 0 24 24">
+						<use href="/menu.svg#menu-one" />
+						<use href="/menu.svg#menu-two" />
+						<use href="/menu.svg#menu-three" />
+					</svg>
+				</button>
+			</div>
+			<div class="center">{findPath(dir)}</div>
+			<div class="right"></div>
+			<div></div>
+		</header>
+		<slot />
 
-    <!-- svelte-ignore a11y-no-static-element-interactions a11y-click-events-have-key-events -->
-    <div class={ showMenu ? "cover" : "hidden cover" } on:click={() => {showMenu = false}} aria-label="menu-control"></div>
+		<!-- svelte-ignore a11y-no-static-element-interactions a11y-click-events-have-key-events -->
+		<div
+			class={showMenu ? 'cover' : 'hidden cover'}
+			on:click={() => {
+				showMenu = false;
+			}}
+			aria-label="menu-control"
+		></div>
 	</div>
 </div>
 
 <style>
 	#blog {
 		max-width: 76em;
-    height: 100vh;
+		height: 100vh;
 		margin: 0 auto;
 		display: flex;
 	}
@@ -214,79 +222,80 @@
 		padding: 1em;
 	}
 
-  #page-header {
-    display: none;
-  }
+	#page-header {
+		display: none;
+	}
 
-  #page-header .left, #page-header .right {
-    flex: 1;
-  }
+	#page-header .left,
+	#page-header .right {
+		flex: 1;
+	}
 
-  /* Media styles */
+	/* Media styles */
 
-  @media screen and (max-width: 56rem) {
-    #menu {
-      /* display: none; */
+	@media screen and (max-width: 56rem) {
+		#menu {
+			/* display: none; */
 
-      position: fixed;
-      top: 0;
-      left: 0;
-      background-color: var(--background-color);
-      transition: .2s ease-in-out;
-      transition-property: transform, margin, opacity, visibility;
-      will-change: transform, margin, opacity;
-      margin-inline-start: -16rem;
-        z-index: 1;
-    }
+			position: fixed;
+			top: 0;
+			left: 0;
+			background-color: var(--background-color);
+			transition: 0.2s ease-in-out;
+			transition-property: transform, margin, opacity, visibility;
+			will-change: transform, margin, opacity;
+			margin-inline-start: -16rem;
+			z-index: 1;
+		}
 
-    #blog .show {
-      display: block;
-      transform: translateX(16rem);
-    }
+		#blog .show {
+			display: block;
+			transform: translateX(16rem);
+		}
 
-    h2 {
-      margin-top: 0;
-    }
+		h2 {
+			margin-top: 0;
+		}
 
-    #page-header { 
-      display: flex;
-    }
+		#page-header {
+			display: flex;
+		}
 
-    .opaque {
-      opacity: 0.25;
-    }
+		.opaque {
+			opacity: 0.25;
+		}
 
-    #page {
-      transition: .2s ease-in-out;
-    transition-property: transform, margin, opacity, visibility;
-    will-change: transform, margin, opacity;
-    }
+		#page {
+			transition: 0.2s ease-in-out;
+			transition-property: transform, margin, opacity, visibility;
+			will-change: transform, margin, opacity;
+		}
 
-    .hidden {
-      display: none;
-    }
+		.hidden {
+			display: none;
+		}
 
-    .cover {
-      position: fixed;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-    }
-  }
+		.cover {
+			position: fixed;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+		}
+	}
 
-  .left {
-    display: flex;
-    align-items: center;
-  }
+	.left {
+		display: flex;
+		align-items: center;
+	}
 
-  #burger-wrapper {
-    display: flex;
+	#burger-wrapper {
+		display: flex;
 		background-color: var(--background-color);
-    border: none;
-    padding: 0px;
-  }
-  
+		border: none;
+		padding: 0px;
+	}
+
 	#burger-icon {
 		height: 1.25em;
 		width: 1.25em;

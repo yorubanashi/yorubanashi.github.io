@@ -11,7 +11,7 @@
 
 <style>
 	:global(:root) {
-    --background-color: rgb(15, 15, 15);
+		--background-color: rgb(15, 15, 15);
 		--font-family: Roboto, Arial, sans-serif;
 		--font-color: rgb(241, 241, 241);
 		--font-color-secondary: rgb(170, 170, 170);
