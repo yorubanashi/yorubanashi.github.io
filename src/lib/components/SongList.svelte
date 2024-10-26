@@ -127,7 +127,7 @@
 	}
 
 	.title-col {
-		width: 20em;
+		width: 50%;
 	}
 
 	td {

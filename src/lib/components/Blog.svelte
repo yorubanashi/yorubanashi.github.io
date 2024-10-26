@@ -10,8 +10,6 @@
 	import { page } from '$app/stores';
 	import { type Language, LanguageList } from '$lib/consts/languages';
 
-  import type { Action } from "svelte/action";
-
 	// sl = selected language, ol = other languages
 	let sl: Language;
 	let ol: Language[];
@@ -39,6 +37,7 @@
 	[sl, ol] = refreshLanguageList();
 	afterNavigate(() => {
 		[sl, ol] = refreshLanguageList();
+    showMenu = false;
 	});
 
 	// Control "translation" toggle
@@ -75,25 +74,6 @@
   // Menu control in mobile
   let showMenu: boolean = false;
   const toggleMenu = () => { showMenu = !showMenu; };
-
-  const clickOutside: Action<HTMLElement, () => void>  = (node: HTMLElement, callback: () => void) => {
-    const handleClick = (event: MouseEvent) => {
-      // https://stackoverflow.com/questions/71193818
-      if (!node.contains(event.target as Node)) {
-        // Explicitly define the function in an "outclick" attr:
-        // node.dispatchEvent(new CustomEvent('outclick'));
-        callback();
-      }
-    };
-
-    document.addEventListener('click', handleClick, true);
-
-    return {
-      destroy() {
-        document.removeEventListener('click', handleClick, true);
-      }
-    };
-  }
 </script>
 
 <svelte:head>
@@ -103,8 +83,7 @@
 </svelte:head>
 
 <div id="blog">
-  <!-- Figure out how to properly unmount / deregister this function so it's not always active. -->
-	<aside id="menu" use:clickOutside={() => {showMenu = false}} class={ showMenu ? "show" : "" }>
+	<aside id="menu" class={ showMenu ? "show" : "" }>
 		<div id="menu-content">
 			<h2>Title</h2>
 			<div>
@@ -160,13 +139,17 @@
       <div class="right"></div>
       <div></div>
     </header>
-		<slot />
+    <slot />
+
+    <!-- svelte-ignore a11y-no-static-element-interactions a11y-click-events-have-key-events -->
+    <div class={ showMenu ? "cover" : "hidden cover" } on:click={() => {showMenu = false}} aria-label="menu-control"></div>
 	</div>
 </div>
 
 <style>
 	#blog {
 		max-width: 76em;
+    height: 100vh;
 		margin: 0 auto;
 		display: flex;
 	}
@@ -278,6 +261,18 @@
     transition-property: transform, margin, opacity, visibility;
     will-change: transform, margin, opacity;
     }
+
+    .hidden {
+      display: none;
+    }
+
+    .cover {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
   }
 
   .left {
@@ -289,11 +284,12 @@
     display: flex;
 		background-color: var(--background-color);
     border: none;
+    padding: 0px;
   }
   
 	#burger-icon {
-		height: 1em;
-		width: 1em;
+		height: 1.25em;
+		width: 1.25em;
 		fill: var(--font-color);
 	}
 </style>
