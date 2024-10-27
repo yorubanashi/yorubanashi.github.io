@@ -1,0 +1,94 @@
+<script lang="ts">
+	export let showMenu: boolean;
+	export let pageTitle: string;
+	export let toggleMenu: () => void;
+</script>
+
+<div id="page" class={showMenu ? 'opaque' : ''}>
+	<header id="page-header">
+		<div class="left">
+			<button id="burger-button" on:click={toggleMenu}>
+				<svg id="burger-icon" viewBox="0 0 24 24">
+					<use href="/menu.svg#menu-one" />
+					<use href="/menu.svg#menu-two" />
+					<use href="/menu.svg#menu-three" />
+				</svg>
+			</button>
+		</div>
+		<div class="center">{pageTitle}</div>
+		<div class="right"></div>
+		<div></div>
+	</header>
+	<slot />
+
+	<!-- svelte-ignore a11y-no-static-element-interactions a11y-click-events-have-key-events -->
+	<div
+		class={showMenu ? 'cover' : 'hidden cover'}
+		on:click={() => {
+			showMenu = false;
+		}}
+		aria-label="menu-control"
+	></div>
+</div>
+
+<style>
+	#page {
+		flex-grow: 1;
+		padding: 1em;
+	}
+
+	#page-header {
+		display: none;
+	}
+
+	#page-header .left,
+	#page-header .right {
+		flex: 1;
+	}
+
+	.left {
+		display: flex;
+		align-items: center;
+	}
+
+	#burger-button {
+		display: flex;
+		background-color: var(--background-color);
+		border: none;
+		padding: 0px;
+	}
+
+	#burger-icon {
+		height: 1.25em;
+		width: 1.25em;
+		stroke: var(--font-color);
+	}
+
+	.hidden {
+		display: none;
+	}
+
+	.cover {
+		position: fixed;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+	}
+
+	@media screen and (max-width: 56rem) {
+		#page {
+			transition: 0.2s ease-in-out;
+			transition-property: transform, margin, opacity, visibility;
+			will-change: transform, margin, opacity;
+		}
+
+		.opaque {
+			opacity: 0.25;
+		}
+
+		#page-header {
+			display: flex;
+		}
+	}
+</style>
