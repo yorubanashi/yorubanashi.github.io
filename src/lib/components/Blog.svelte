@@ -9,11 +9,13 @@
 	export let dir: Dir;
 
 	// Component Variables
+  let pageTitle: string;
+  $: pageTitle = findPageTitle(dir);
+  
 	let showMenu: boolean = false;
 	const toggleMenu = () => {
 		showMenu = !showMenu;
 	};
-	$: pageTitle = findPageTitle(dir);
 
 	// Component Methods
 	// findPageTitle recursively digs into dir to find a matching address to grab the page title.
@@ -36,6 +38,7 @@
 
 	// Component "Hooks"
 	afterNavigate(() => {
+    pageTitle = findPageTitle(dir);
 		showMenu = false;
 	});
 </script>
