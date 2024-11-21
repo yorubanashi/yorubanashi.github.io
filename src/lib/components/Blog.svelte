@@ -9,9 +9,9 @@
 	export let dir: Dir;
 
 	// Component Variables
-  let pageTitle: string;
-  $: pageTitle = findPageTitle(dir);
-  
+	let pageTitle: string;
+	$: pageTitle = findPageTitle(dir);
+
 	let showMenu: boolean = false;
 	const toggleMenu = () => {
 		showMenu = !showMenu;
@@ -38,7 +38,7 @@
 
 	// Component "Hooks"
 	afterNavigate(() => {
-    pageTitle = findPageTitle(dir);
+		pageTitle = findPageTitle(dir);
 		showMenu = false;
 	});
 </script>

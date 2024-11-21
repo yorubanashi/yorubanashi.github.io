@@ -19,7 +19,10 @@
 		<div class="right"></div>
 		<div></div>
 	</header>
-	<slot />
+
+	<div id="page-content">
+		<slot />
+	</div>
 
 	<!-- svelte-ignore a11y-no-static-element-interactions a11y-click-events-have-key-events -->
 	<div
@@ -39,6 +42,11 @@
 
 	#page-header {
 		display: none;
+	}
+
+	/* https://stackoverflow.com/questions/46086483/how-to-apply-styles-to-slot-element-in-svelte */
+	#page-content > :global(:first-child) {
+		margin-top: 0;
 	}
 
 	#page-header .left,

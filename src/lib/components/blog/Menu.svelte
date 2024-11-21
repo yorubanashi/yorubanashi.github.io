@@ -53,7 +53,7 @@
 
 <aside id="menu" class={show ? 'show' : ''}>
 	<div id="menu-content">
-		<h2>Title</h2>
+		<h2 id="menu-title">夜の思索</h2>
 		<div>
 			<input type="text" placeholder="[WIP] Search" />
 		</div>
@@ -98,6 +98,10 @@
 	#menu {
 		height: 100vh;
 		flex-basis: 16em;
+	}
+
+	#menu-title {
+		margin-top: 0;
 	}
 
 	input {
