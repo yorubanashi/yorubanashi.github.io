@@ -5,6 +5,11 @@ export interface Song {
 	artist: string;
 }
 
+export interface SongRequest {
+	title: string;
+	artist: string;
+}
+
 export interface SongResponse {
 	songs: Song[];
 	error: string;

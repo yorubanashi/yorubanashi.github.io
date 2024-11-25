@@ -42,11 +42,15 @@
 					<tr
 						class="song"
 						on:click={() => {
-							goto(`/cn/songs/${song.title}`);
+							goto(`/cn/songs/${song.artist}/${song.title}`);
 						}}
 					>
 						<!-- Leave <a> here with href for Svelte pre-rendering -->
-						<td><a class="invisible" href={`/cn/songs/${song.title}`}>{song.title}</a></td>
+						<!-- svelte-ignore a11y-missing-content -->
+						<td>
+              <a class="invisible" href={`/cn/songs/${song.artist}/${song.title}`}></a>
+              <span>{song.title}</span>
+            </td>
 						<td>{song.artist}</td>
 					</tr>
 				{/each}
@@ -138,5 +142,9 @@
 	a {
 		text-decoration: none;
 		color: var(--font-color);
+	}
+
+	.invisible {
+		display: none;
 	}
 </style>
