@@ -5,16 +5,21 @@
 	import { type Language, LanguageList } from '$lib/consts/languages';
 	import type { Dir } from '$lib/types/svelte';
 
-	// Component Props
-	export let dir: Dir;
-	export let show: boolean;
+	
+	interface Props {
+		// Component Props
+		dir: Dir;
+		show: boolean;
+	}
+
+	let { dir, show }: Props = $props();
 
 	// Component Variables
 	// sl = selected language, ol = other languages
-	let sl: Language;
-	let ol: Language[];
+	let sl: Language = $state();
+	let ol: Language[] = $state();
 	// Translation / Language menu toggle + toggle function
-	let showLanguages: boolean = false;
+	let showLanguages: boolean = $state(false);
 	const toggleLanguages = () => {
 		showLanguages = !showLanguages;
 	};
@@ -40,9 +45,9 @@
 	};
 
 	// relativeLink appends the selected language's prefix onto the intended link.
-	$: relativeLink = (link: string) => {
+	let relativeLink = $derived((link: string) => {
 		return `${sl.linkPrefix}/${link}`;
-	};
+	});
 
 	// Component "Hooks"
 	[sl, ol] = refreshLanguageList();
@@ -60,8 +65,8 @@
 		<div>
 			<ul id="translate-list">
 				<li>
-					<!-- svelte-ignore a11y-invalid-attribute -->
-					<a href="javascript:void(0)" on:click={toggleLanguages} class="flex justify-between">
+					<!-- svelte-ignore a11y_invalid_attribute -->
+					<a href="javascript:void(0)" onclick={toggleLanguages} class="flex justify-between">
 						<div class="flex align-center">
 							<svg id="translate-icon" viewBox="0 0 24 24">
 								<use href="/translate.svg#translate" />

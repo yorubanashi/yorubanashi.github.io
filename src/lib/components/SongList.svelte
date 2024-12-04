@@ -1,3 +1,4 @@
+<!-- @migration-task Error while migrating Svelte code: `<th>` is invalid inside `<thead>` -->
 <!--
   Standalone list component that covers the entire viewport.
   Includes a search bar, and pagination (soon)!
@@ -33,8 +34,10 @@
 	<div id="listContainer">
 		<table>
 			<thead>
-				<th class="title-col">标题</th>
-				<th>歌手</th>
+				<tr>
+					<th class="title-col">标题</th>
+					<th>歌手</th>
+				</tr>
 			</thead>
 
 			<tbody>
@@ -45,10 +48,8 @@
 							goto(`/cn/songs/${song.artist}/${song.title}`);
 						}}
 					>
-						<!-- Leave <a> here with href for Svelte pre-rendering -->
-						<!-- svelte-ignore a11y-missing-content -->
 						<td>
-              <a class="invisible" href={`/cn/songs/${song.artist}/${song.title}`}></a>
+              <a class="invisible" aria-label="song-link" href={`/cn/songs/${song.artist}/${song.title}`}></a>
               <span>{song.title}</span>
             </td>
 						<td>{song.artist}</td>

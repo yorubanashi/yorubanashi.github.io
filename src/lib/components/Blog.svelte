@@ -1,18 +1,23 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { afterNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
 	import type { Dir } from '$lib/types/svelte';
 	import Menu from './blog/Menu.svelte';
 	import Page from './blog/Page.svelte';
+	
+	interface Props {
+		dir: Dir;
+		children?: import('svelte').Snippet;
+	}
 
-	// Component Props
-	export let dir: Dir;
+	let { dir, children }: Props = $props();
 
 	// Component Variables
-	let pageTitle: string;
-	$: pageTitle = findPageTitle(dir);
+	let pageTitle: string = $state("");
 
-	let showMenu: boolean = false;
+	let showMenu: boolean = $state(false);
 	const toggleMenu = () => {
 		showMenu = !showMenu;
 	};
@@ -41,6 +46,9 @@
 		pageTitle = findPageTitle(dir);
 		showMenu = false;
 	});
+	run(() => {
+		pageTitle = findPageTitle(dir);
+	});
 </script>
 
 <svelte:head>
@@ -53,7 +61,7 @@
 	<Menu {dir} show={showMenu} />
 
 	<Page bind:showMenu {pageTitle} {toggleMenu}>
-		<slot />
+		{@render children?.()}
 	</Page>
 </div>
 

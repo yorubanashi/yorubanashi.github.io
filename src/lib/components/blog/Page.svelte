@@ -1,13 +1,23 @@
 <script lang="ts">
-	export let showMenu: boolean;
-	export let pageTitle: string;
-	export let toggleMenu: () => void;
+	interface Props {
+		showMenu: boolean;
+		pageTitle: string;
+		toggleMenu: () => void;
+		children?: import('svelte').Snippet;
+	}
+
+	let {
+		showMenu = $bindable(),
+		pageTitle,
+		toggleMenu,
+		children
+	}: Props = $props();
 </script>
 
 <div id="page" class={showMenu ? 'opaque' : ''}>
 	<header id="page-header">
 		<div class="left">
-			<button id="burger-button" on:click={toggleMenu}>
+			<button id="burger-button" onclick={toggleMenu}>
 				<svg id="burger-icon" viewBox="0 0 24 24">
 					<use href="/menu.svg#menu-one" />
 					<use href="/menu.svg#menu-two" />
@@ -21,13 +31,13 @@
 	</header>
 
 	<div id="page-content">
-		<slot />
+		{@render children?.()}
 	</div>
 
-	<!-- svelte-ignore a11y-no-static-element-interactions a11y-click-events-have-key-events -->
+	<!-- svelte-ignore a11y_no_static_element_interactions, a11y_click_events_have_key_events -->
 	<div
 		class={showMenu ? 'cover' : 'hidden cover'}
-		on:click={() => {
+		onclick={() => {
 			showMenu = false;
 		}}
 		aria-label="menu-control"

@@ -2,11 +2,16 @@
 	import Blog from '$lib/components/Blog.svelte';
 	import type { SvelteWalkResponse } from '$lib/types/svelte';
 
-	export let data: SvelteWalkResponse;
+	interface Props {
+		data: SvelteWalkResponse;
+		children?: import('svelte').Snippet;
+	}
+
+	let { data, children }: Props = $props();
 </script>
 
 <Blog dir={data.dir}>
-	<slot />
+	{@render children?.()}
 </Blog>
 
 <style>
