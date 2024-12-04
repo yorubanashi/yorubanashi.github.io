@@ -6,12 +6,7 @@
 		children?: import('svelte').Snippet;
 	}
 
-	let {
-		showMenu = $bindable(),
-		pageTitle,
-		toggleMenu,
-		children
-	}: Props = $props();
+	let { showMenu = $bindable(), pageTitle, toggleMenu, children }: Props = $props();
 </script>
 
 <div id="page" class={showMenu ? 'opaque' : ''}>

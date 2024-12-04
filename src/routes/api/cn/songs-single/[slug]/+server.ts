@@ -3,7 +3,7 @@ import { json } from '@sveltejs/kit';
 import type { SongRequest, SongResponse } from '$lib/types/songs';
 
 export async function GET({ params }) {
-  const [artist, title] = params.slug.split("--");
+	const [artist, title] = params.slug.split('--');
 	const request: SongRequest = { artist: artist, title: title };
 	const response = await fetch('http://localhost:8080/songs', {
 		method: 'POST',

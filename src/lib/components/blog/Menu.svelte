@@ -5,7 +5,6 @@
 	import { type Language, LanguageList } from '$lib/consts/languages';
 	import type { Dir } from '$lib/types/svelte';
 
-	
 	interface Props {
 		// Component Props
 		dir: Dir;

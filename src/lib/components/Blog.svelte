@@ -6,7 +6,7 @@
 	import type { Dir } from '$lib/types/svelte';
 	import Menu from './blog/Menu.svelte';
 	import Page from './blog/Page.svelte';
-	
+
 	interface Props {
 		dir: Dir;
 		children?: import('svelte').Snippet;
@@ -15,7 +15,7 @@
 	let { dir, children }: Props = $props();
 
 	// Component Variables
-	let pageTitle: string = $state("");
+	let pageTitle: string = $state('');
 
 	let showMenu: boolean = $state(false);
 	const toggleMenu = () => {

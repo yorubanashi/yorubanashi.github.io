@@ -49,9 +49,13 @@
 						}}
 					>
 						<td>
-              <a class="invisible" aria-label="song-link" href={`/cn/songs/${song.artist}/${song.title}`}></a>
-              <span>{song.title}</span>
-            </td>
+							<a
+								class="invisible"
+								aria-label="song-link"
+								href={`/cn/songs/${song.artist}/${song.title}`}
+							></a>
+							<span>{song.title}</span>
+						</td>
 						<td>{song.artist}</td>
 					</tr>
 				{/each}
