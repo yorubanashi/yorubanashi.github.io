@@ -14,9 +14,6 @@
 	let { dir, show }: Props = $props();
 
 	// Component Variables
-	// sl = selected language, ol = other languages
-	let sl: Language = $state();
-	let ol: Language[] = $state();
 	// Translation / Language menu toggle + toggle function
 	let showLanguages: boolean = $state(false);
 	const toggleLanguages = () => {
@@ -48,10 +45,14 @@
 		return `${sl.linkPrefix}/${link}`;
 	});
 
-	// Component "Hooks"
-	[sl, ol] = refreshLanguageList();
+	// Component "Hooks" + More State
+	let ll = $state(refreshLanguageList());
+	// sl = selected language, ol = other languages
+	let sl: Language = $derived(ll[0]);
+	let ol: Language[] = $derived(ll[1]);
+
 	afterNavigate(() => {
-		[sl, ol] = refreshLanguageList();
+		ll = refreshLanguageList();
 	});
 </script>
 

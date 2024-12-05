@@ -12,7 +12,7 @@
 <div id="page" class={showMenu ? 'opaque' : ''}>
 	<header id="page-header">
 		<div class="left">
-			<button id="burger-button" onclick={toggleMenu}>
+			<button id="burger-button" aria-label="menu-toggle" onclick={toggleMenu}>
 				<svg id="burger-icon" viewBox="0 0 24 24">
 					<use href="/menu.svg#menu-one" />
 					<use href="/menu.svg#menu-two" />
