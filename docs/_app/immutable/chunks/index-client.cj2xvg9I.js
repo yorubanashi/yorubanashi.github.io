@@ -1,0 +1,1 @@
+import{e as o,d as t,i as c}from"./runtime.B9Y48AsJ.js";import{l as u}from"./index.BFqC5wTN.js";function i(n){throw new Error("lifecycle_outside_component")}function f(n){o===null&&i(),u&&o.l!==null?l(o).m.push(n):t(()=>{const e=c(n);if(typeof e=="function")return e})}function l(n){var e=n.l;return e.u??(e.u={a:[],b:[],m:[]})}export{f as o};
