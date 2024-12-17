@@ -95,6 +95,11 @@
 		stroke: var(--font-color);
 	}
 
+	#settings-icon {
+		fill: var(--font-color);
+		stroke: var(--font-color);
+	}
+
 	.hidden {
 		display: none;
 	}
