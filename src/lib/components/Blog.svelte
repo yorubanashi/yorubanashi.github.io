@@ -67,7 +67,7 @@
 
 <style>
 	#blog {
-		max-width: 76em;
+		max-width: 80em;
 		height: 100vh;
 		margin: 0 auto;
 		display: flex;

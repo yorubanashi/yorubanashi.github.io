@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { options } from "$lib/components/blog/page";
+
 	interface Props {
 		showMenu: boolean;
 		pageTitle: string;
@@ -7,6 +9,10 @@
 	}
 
 	let { showMenu = $bindable(), pageTitle, toggleMenu, children }: Props = $props();
+
+	const toggleOptions = () => {
+		$options = $options == 0 ? 1 : 0;
+	}
 </script>
 
 <div id="page" class={showMenu ? 'opaque' : ''}>
@@ -14,14 +20,22 @@
 		<div class="left">
 			<button id="burger-button" aria-label="menu-toggle" onclick={toggleMenu}>
 				<svg id="burger-icon" viewBox="0 0 24 24">
-					<use href="/menu.svg#menu-one" />
-					<use href="/menu.svg#menu-two" />
-					<use href="/menu.svg#menu-three" />
+					<use href="/menu.svg#top" />
+					<use href="/menu.svg#mid" />
+					<use href="/menu.svg#bot" />
 				</svg>
 			</button>
 		</div>
 		<div class="center">{pageTitle}</div>
-		<div class="right"></div>
+		<div class="right">
+			{#if !Number.isNaN($options)}
+				<button id="burger-button" aria-label="settings-toggle" onclick={toggleOptions}>
+					<svg id="settings-icon" viewBox="0 0 24 24">
+						<use href="/settings.svg#settings" />
+					</svg>
+				</button>
+			{/if}
+		</div>
 		<div></div>
 	</header>
 
@@ -59,9 +73,13 @@
 		flex: 1;
 	}
 
-	.left {
+	.left, .right {
 		display: flex;
 		align-items: center;
+	}
+
+	.right {
+		flex-direction: row-reverse;
 	}
 
 	#burger-button {
@@ -102,6 +120,13 @@
 
 		#page-header {
 			display: flex;
+			margin-bottom: 1em;
+		}
+
+		#settings-icon {
+			height: 1.25em;
+			fill-rule: evenodd;
+			stroke-width: 0.25px;
 		}
 	}
 </style>

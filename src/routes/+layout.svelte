@@ -20,6 +20,7 @@
 		--font-family: Roboto, Arial, sans-serif;
 		--font-color: rgb(241, 241, 241);
 		--font-color-secondary: rgb(170, 170, 170);
+		--font-size: 16px;
 	}
 
 	:global(body) {
@@ -27,10 +28,14 @@
 		margin: 0;
 
 		background-color: var(--background-color);
-		font-size: 16px;
+		font-size: var(--font-size);
 		font-family: var(--font-family);
 		letter-spacing: 0.33px;
 		color: var(--font-color);
+	}
+
+	:global(button) {
+		font-size: var(--font-size);
 	}
 
 	:global(input[type='text']) {
