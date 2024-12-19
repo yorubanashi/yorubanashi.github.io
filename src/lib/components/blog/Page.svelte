@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { options } from "$lib/components/blog/page";
+	import { options } from '$lib/components/blog/page';
 
 	interface Props {
 		showMenu: boolean;
@@ -12,7 +12,7 @@
 
 	const toggleOptions = () => {
 		$options = $options == 0 ? 1 : 0;
-	}
+	};
 </script>
 
 <div id="page" class={showMenu ? 'opaque' : ''}>
@@ -73,7 +73,8 @@
 		flex: 1;
 	}
 
-	.left, .right {
+	.left,
+	.right {
 		display: flex;
 		align-items: center;
 	}

@@ -1,4 +1,4 @@
-import { writable } from "svelte/store";
+import { writable } from 'svelte/store';
 
 // Toggle for an options menu on the page.
 // NaN = no icon, 0 = hidden, 1 = show
