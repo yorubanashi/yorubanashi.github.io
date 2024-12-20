@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { beforeNavigate } from '$app/navigation';
 	import { options } from '$lib/components/blog/page';
+	import Toggle from '$lib/components/Toggle.svelte';
 	import type { SongResponse } from '$lib/types/songs';
 
 	interface Props {
@@ -16,12 +17,9 @@
 		$options = NaN;
 	});
 
-	// Testing
-	let isToggled = $state(false);
-	const abc = () => {
-		isToggled = !isToggled;
-		console.log(isToggled);
-	};
+	// Lyrics toggle booleans
+	let toggleRom = $state(false);
+	let toggleEng = $state(false);
 </script>
 
 <div id="options-layout" class="flex">
@@ -34,8 +32,8 @@
 					{#each verse.lines as line}
 						<div class="line">
 							<div class="primary">{line.pri}</div>
-							<div class="romanized">{line.rom}</div>
-							<div class="english">{line.eng}</div>
+							{#if toggleRom} <div class="romanized">{line.rom}</div> {/if}
+							{#if toggleEng} <div class="english">{line.eng}</div> {/if}
 						</div>
 					{/each}
 				</div>
@@ -46,88 +44,13 @@
 		<div id="footer"></div>
 	</div>
 	<div id="options-content" class={$options == 1 ? 'show' : ''}>
-		<div>Hello world!</div>
-		<!-- svelte-ignore a11y_click_events_have_key_events -->
-		<tp-yt-paper-toggle-button
-			onclick={abc}
-			class="style-scope ytd-toggle-item-renderer"
-			noink=""
-			role="button"
-			aria-pressed="true"
-			tabindex="0"
-			toggles=""
-			aria-disabled="false"
-			checked={isToggled ? true : null}
-			active=""
-			style="touch-action: pan-y;"
-			><!--css-build:shady--><!--css-build:shady-->
-			<div class="toggle-container style-scope tp-yt-paper-toggle-button">
-				<div id="toggleBar" class="toggle-bar style-scope tp-yt-paper-toggle-button"></div>
-				<div id="toggleButton" class="toggle-button style-scope tp-yt-paper-toggle-button"></div>
-			</div>
-
-			<div class="toggle-label style-scope tp-yt-paper-toggle-button"></div>
-		</tp-yt-paper-toggle-button>
+		<Toggle bind:checked={toggleRom} label="Enable romanized lyrics" />
+		<Toggle bind:checked={toggleEng} label="Enable English translation" />
 		<hr id="options-divider" />
 	</div>
 </div>
 
 <style>
-	.toggle-container.tp-yt-paper-toggle-button {
-		display: inline-block;
-		position: relative;
-		width: 36px;
-		height: 14px;
-		margin: 4px 1px;
-		padding: 0;
-		border: 0;
-		background: transparent;
-	}
-
-	.toggle-bar.tp-yt-paper-toggle-button {
-		position: absolute;
-		height: 100%;
-		width: 100%;
-		border-radius: 8px;
-		pointer-events: none;
-		transition: background-color linear 0.5s;
-		background-color: var(--paper-toggle-button-unchecked-bar-color, rgb(113, 113, 113));
-		opacity: var(--paper-toggle-button-unchecked-bar-opacity, 0.4);
-	}
-
-	.toggle-button.tp-yt-paper-toggle-button {
-		position: absolute;
-		top: -3px;
-		left: 0;
-		right: auto;
-		height: 20px;
-		width: 20px;
-		border-radius: 50%;
-		box-shadow: rgba(0, 0, 0, 0.6) 0 1px 5px 0 rgba(0, 0, 0, 0.6);
-		transition:
-			-webkit-transform linear 0.5s,
-			background-color linear 0.5s;
-		transition:
-			transform linear 0.5s,
-			background-color linear 0.5s;
-		will-change: transform;
-		background-color: var(--paper-toggle-button-unchecked-button-color, #fafafa);
-	}
-
-	tp-yt-paper-toggle-button[checked]:not([disabled]) .toggle-bar.tp-yt-paper-toggle-button {
-		background-color: var(--paper-toggle-button-checked-bar-color, rgb(113, 113, 113));
-		opacity: var(--paper-toggle-button-checked-bar-opacity, 0.5);
-	}
-
-	tp-yt-paper-toggle-button[checked]:not([disabled]) .toggle-button.tp-yt-paper-toggle-button {
-		background-color: var(--paper-toggle-button-checked-button-color, rgb(62, 166, 255));
-	}
-
-	tp-yt-paper-toggle-button[checked] .toggle-button.tp-yt-paper-toggle-button {
-		-webkit-transform: translate(16px, 0);
-		transform: translate(16px, 0);
-	}
-
 	/* Main Content */
 
 	#main-content {
