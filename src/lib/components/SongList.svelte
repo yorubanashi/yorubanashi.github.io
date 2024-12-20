@@ -10,7 +10,11 @@
 	import { goto } from '$app/navigation';
 	import type { Song } from '$lib/types/songs';
 
-	export let songs: Song[];
+	interface Props {
+		songs: Song[];
+	}
+
+	let { songs }: Props = $props();
 </script>
 
 <h1>歌单</h1>
