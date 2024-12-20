@@ -1,0 +1,1 @@
+import{i as l}from"./runtime.Bfwhtjjl.js";import{w as r}from"./entry.DBWS1Cq-.js";function _(s,e){var t=s.__className,a=c(e);l&&s.className===a?s.__className=a:(t!==a||l&&s.className!==a)&&(e==null?s.removeAttribute("class"):s.className=a,s.__className=a)}function c(s){return s??""}let N=r(NaN);export{N as o,_ as s};
