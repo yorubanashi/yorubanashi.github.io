@@ -48,7 +48,7 @@
 				{#each songs as song}
 					<tr
 						class="song"
-						on:click={() => {
+						onclick={() => {
 							goto(`/cn/songs/${song.artist}/${song.title}`);
 						}}
 					>
