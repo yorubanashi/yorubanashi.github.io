@@ -18,8 +18,9 @@ export interface Song {
 }
 
 export interface SongRequest {
-	title: string;
-	artist: string;
+	language: string;
+	title?: string;
+	artist?: string;
 }
 
 export interface SongResponse {
