@@ -87,7 +87,7 @@
 				{/if}
 			</ul>
 		</div>
-		<div>
+		<div id="navigation">
 			<ul>
 				{#if sl !== undefined && dir.dirs !== undefined}
 					{#each Object.entries(dir.dirs) as nav}
@@ -131,12 +131,12 @@
 
 	ul {
 		list-style-type: none;
-		margin: 0;
+		margin: 1em 0;
 		padding: 0;
 	}
 
 	li {
-		margin: 1em 0;
+		margin: 0.75em 0;
 	}
 
 	#menu-content {
