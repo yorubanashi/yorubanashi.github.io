@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { beforeNavigate } from '$app/navigation';
 	import { options } from '$lib/components/blog/page';
-	import Toggle from '$lib/components/Toggle.svelte';
+	import Toggle from '$lib/components/controls/Toggle.svelte';
 	import type { SongResponse } from '$lib/types/songs';
 
 	interface Props {

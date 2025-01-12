@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Blog from '$lib/components/Blog.svelte';
+	import Blog from '$lib/components/blog/Blog.svelte';
 	import type { SvelteWalkResponse } from '$lib/types/svelte';
 
 	interface Props {

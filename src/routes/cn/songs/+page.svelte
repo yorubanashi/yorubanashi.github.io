@@ -1,7 +1,7 @@
 <!-- 歌曲 -->
 
 <script lang="ts">
-	import SongList from '$lib/components/SongList.svelte';
+	import SongList from '$lib/components/pages/SongList.svelte';
 	import type { SongResponse } from '$lib/types/songs';
 
 	interface Props {

@@ -1,11 +1,9 @@
 <script lang="ts">
-	import { run } from 'svelte/legacy';
-
 	import { afterNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
 	import type { Dir } from '$lib/types/svelte';
-	import Menu from './blog/Menu.svelte';
-	import Page from './blog/Page.svelte';
+	import Menu from './Menu.svelte';
+	import Page from './Page.svelte';
 
 	interface Props {
 		dir: Dir;
@@ -45,9 +43,6 @@
 	afterNavigate(() => {
 		pageTitle = findPageTitle(dir);
 		showMenu = false;
-	});
-	run(() => {
-		pageTitle = findPageTitle(dir);
 	});
 </script>
 

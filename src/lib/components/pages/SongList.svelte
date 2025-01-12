@@ -1,4 +1,3 @@
-<!-- @migration-task Error while migrating Svelte code: `<th>` is invalid inside `<thead>` -->
 <!--
   Standalone list component that covers the entire viewport.
   Includes a search bar, and pagination (soon)!
