@@ -1,0 +1,1 @@
+const t={apiPrefix:"cn",linkPrefix:"/cn",name:"中文"},a={apiPrefix:"en",linkPrefix:"/en",name:"English"},s={apiPrefix:"jp",linkPrefix:"/jp",name:"日本語"},i=[t,s,a],l=r=>{for(let e=0;e<i.length;e++){let n=i[e];if(r.startsWith(n.linkPrefix))return n}return a};export{i as L,l as p};

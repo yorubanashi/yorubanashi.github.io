@@ -1,0 +1,1 @@
+import{h as l}from"./runtime._KKDCafj.js";import{w as r}from"./entry.C8ADqMT3.js";function i(s,e){var t=s.__className,a=c(e);l&&s.className===a?s.__className=a:(t!==a||l&&s.className!==a)&&(e==null?s.removeAttribute("class"):s.className=a,s.__className=a)}function c(s){return s??""}let N=r(NaN);export{N as o,i as s};
