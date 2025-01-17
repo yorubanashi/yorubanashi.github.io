@@ -1,4 +1,4 @@
-export interface SONG_LIST {
+interface SONG_LIST {
     SONG_LIST: string;
     SEARCH: string;
     TITLE: string;
@@ -19,3 +19,19 @@ export const SONG_LIST: { [lang: string]: SONG_LIST; } = {
         ARTIST: 'アーティスト',
     },
 };
+
+interface MENU {
+    SEARCH: string;
+}
+
+export const MENU: { [lang: string]: MENU } = {
+    'en': {
+        SEARCH: 'Search (...)',
+    },
+    'cn': {
+        SEARCH: '搜索（。。。）',
+    },
+    'jp': {
+        SEARCH: '検索（。。。）',
+    },
+}

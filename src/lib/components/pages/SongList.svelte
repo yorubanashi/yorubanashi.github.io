@@ -15,8 +15,8 @@
 	interface Props {
 		songs: Song[];
 	}
-
 	let { songs }: Props = $props();
+	
 	const language = parseLanguageFromPathname($page.url.pathname);
 	const i18n = SONG_LIST[language.apiPrefix];
 </script>

@@ -1,1 +1,0 @@
-import{T as e,U as t,V as c}from"./runtime._KKDCafj.js";function f(n){throw new Error("lifecycle_outside_component")}function u(n){e===null&&f(),t(()=>{const o=c(n);if(typeof o=="function")return o})}export{u as o};

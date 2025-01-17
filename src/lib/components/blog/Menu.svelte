@@ -2,7 +2,8 @@
 <script lang="ts">
 	import { afterNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { type Language, LanguageList } from '$lib/consts/languages';
+	import { MENU } from '$lib/consts/i18n';
+	import { type Language, LanguageList, parseLanguageFromPathname } from '$lib/consts/languages';
 	import type { Dir } from '$lib/types/svelte';
 
 	interface Props {
@@ -51,8 +52,13 @@
 	let sl: Language = $derived(ll[0]);
 	let ol: Language[] = $derived(ll[1]);
 
+	// More language-related state for i18n
+	let language = $state(parseLanguageFromPathname($page.url.pathname));
+	let i18n = $derived(MENU[language.apiPrefix]);
+
 	afterNavigate(() => {
 		ll = refreshLanguageList();
+		language = parseLanguageFromPathname($page.url.pathname);
 	});
 </script>
 
@@ -60,7 +66,7 @@
 	<div id="menu-content">
 		<h2 id="menu-title">夜の思索</h2>
 		<div>
-			<input type="text" placeholder="[WIP] Search" />
+			<input type="text" placeholder={ i18n.SEARCH } />
 		</div>
 		<div>
 			<ul id="translate-list">

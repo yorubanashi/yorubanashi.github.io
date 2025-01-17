@@ -4,6 +4,8 @@ export interface Language {
 	name: string;
 }
 
+// TODO: Use enums???
+
 const chinese = { apiPrefix: 'cn', linkPrefix: '/cn', name: '中文' };
 const english = { apiPrefix: 'en', linkPrefix: '/en', name: 'English' };
 const japanese = { apiPrefix: 'jp', linkPrefix: '/jp', name: '日本語' };
