@@ -1,3 +1,4 @@
+<!-- TODO: Pass in a string in Markdown and generate content? -->
 <script lang="ts">
     interface Props {
 		children: import('svelte').Snippet;
@@ -16,7 +17,32 @@
 		margin-top: 0;
 	}
 
-    /* #container :global(h1) {
-        font-size: 40px;
-    } */
+	#container :global(h1) {
+		margin-top: 1rem;
+		margin-bottom: 1rem;
+	}
+
+	#container :global(h2) {
+		margin-top: 1rem;
+		margin-bottom: 1rem;
+	}
+
+	#container :global(div) {
+		margin-top: 0px;
+		margin-bottom: 1em;
+	}
+
+    #container :global(ul) {
+		margin-top: 0px;
+        margin-bottom: 1em;
+    }
+
+    #container :global(li) {
+        margin-top: 0.25em;
+		margin-bottom: 0px;
+    }
+
+    #container :global(a) {
+        color: var(--font-color-href);
+    }
 </style>

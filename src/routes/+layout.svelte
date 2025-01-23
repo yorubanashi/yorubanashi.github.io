@@ -20,6 +20,7 @@
 		--font-family: Roboto, Arial, sans-serif;
 		--font-color: rgb(241, 241, 241);
 		--font-color-secondary: rgb(170, 170, 170);
+		--font-color-href: rgb(62, 166, 255);
 		--font-size: 16px;
 	}
 

@@ -1,4 +1,4 @@
-<!-- 歌曲 -->
+<!-- 歌单 -->
 
 <script lang="ts">
 	import SongList from '$lib/components/pages/SongList.svelte';

@@ -7,20 +7,25 @@
 
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
+	import { SONG_LIST } from '$lib/consts/i18n';
+	import { parseLanguageFromPathname } from '$lib/consts/languages';
 	import type { Song } from '$lib/types/songs';
 
 	interface Props {
 		songs: Song[];
 	}
-
 	let { songs }: Props = $props();
+	
+	const language = parseLanguageFromPathname($page.url.pathname);
+	const i18n = SONG_LIST[language.apiPrefix];
 </script>
 
-<h1>歌单</h1>
+<h1>{ i18n.SONG_LIST }</h1>
 <div id="middle">
 	<!-- TODO: Add a settings icon to the right + create a modal -->
 	<div class="search-bar">
-		<input type="text" class="search-input" placeholder="搜索（没准备好）" />
+		<input type="text" class="search-input" placeholder={ i18n.SEARCH } />
 		<!-- SVG stolen from YouTube's search bar -->
 		<svg
 			class="search-icon"
@@ -38,8 +43,8 @@
 		<table>
 			<thead>
 				<tr>
-					<th class="title-col">标题</th>
-					<th>歌手</th>
+					<th class="title-col">{ i18n.TITLE }</th>
+					<th>{ i18n.ARTIST }</th>
 				</tr>
 			</thead>
 
@@ -48,14 +53,14 @@
 					<tr
 						class="song"
 						onclick={() => {
-							goto(`/cn/songs/${song.artist}/${song.title}`);
+							goto(`/${language.apiPrefix}/songs/${song.artist}/${song.title}`);
 						}}
 					>
 						<td>
 							<a
 								class="invisible"
 								aria-label="song-link"
-								href={`/cn/songs/${song.artist}/${song.title}`}
+								href={`/${language.apiPrefix}/songs/${song.artist}/${song.title}`}
 							></a>
 							<span>{song.title}</span>
 						</td>

@@ -1,1 +1,1 @@
-{"dir":{"dirs":{"songs":{"link":{"addr":"songs","name":"歌曲"}}},"link":{"addr":"","name":"首页"}}}
+{"dir":{"dirs":{"notes":{"link":{"addr":"notes","name":"笔记"}},"songs":{"link":{"addr":"songs","name":"歌单"}}},"link":{"addr":"","name":"首页"}}}
