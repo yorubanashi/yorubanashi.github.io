@@ -27,6 +27,11 @@
 		margin-bottom: 1rem;
 	}
 
+	#container :global(h3) {
+		margin-top: 1rem;
+		margin-bottom: 1rem;
+	}
+
 	#container :global(div) {
 		margin-top: 0px;
 		margin-bottom: 1em;
