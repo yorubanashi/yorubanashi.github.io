@@ -16,16 +16,16 @@
 		songs: Song[];
 	}
 	let { songs }: Props = $props();
-	
+
 	const language = parseLanguageFromPathname($page.url.pathname);
 	const i18n = SONG_LIST[language.apiPrefix];
 </script>
 
-<h1>{ i18n.SONG_LIST }</h1>
+<h1>{i18n.SONG_LIST}</h1>
 <div id="middle">
 	<!-- TODO: Add a settings icon to the right + create a modal -->
 	<div class="search-bar">
-		<input type="text" class="search-input" placeholder={ i18n.SEARCH } />
+		<input type="text" class="search-input" placeholder={i18n.SEARCH} />
 		<!-- SVG stolen from YouTube's search bar -->
 		<svg
 			class="search-icon"
@@ -43,8 +43,8 @@
 		<table>
 			<thead>
 				<tr>
-					<th class="title-col">{ i18n.TITLE }</th>
-					<th>{ i18n.ARTIST }</th>
+					<th class="title-col">{i18n.TITLE}</th>
+					<th>{i18n.ARTIST}</th>
 				</tr>
 			</thead>
 

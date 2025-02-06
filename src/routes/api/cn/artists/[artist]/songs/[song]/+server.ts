@@ -3,7 +3,7 @@ import { json } from '@sveltejs/kit';
 import type { SongRequest, SongResponse } from '$lib/types/songs';
 
 export async function GET({ params }) {
-	const request: SongRequest = { language: "cn", artist: params.artist, title: params.song };
+	const request: SongRequest = { language: 'cn', artist: params.artist, title: params.song };
 	const response = await fetch('http://localhost:8080/songs', {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },

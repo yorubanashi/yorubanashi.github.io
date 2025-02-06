@@ -31,8 +31,12 @@
 					{#each verse.lines as line}
 						<div class="line">
 							<div class="primary">{line.pri}</div>
-							{#if toggleRom} <div class="romanized">{line.rom}</div> {/if}
-							{#if toggleEng} <div class="english">{line.eng}</div> {/if}
+							{#if toggleRom}
+								<div class="romanized">{line.rom}</div>
+							{/if}
+							{#if toggleEng}
+								<div class="english">{line.eng}</div>
+							{/if}
 						</div>
 					{/each}
 				</div>

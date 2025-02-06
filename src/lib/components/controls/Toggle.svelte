@@ -1,53 +1,55 @@
 <script lang="ts">
 	interface Props {
 		checked: boolean;
-        label: string;
+		label: string;
 	}
 	let { checked = $bindable(), label }: Props = $props();
 
-    const toggle = () => { checked = !checked; }
+	const toggle = () => {
+		checked = !checked;
+	};
 </script>
 
 <div class="main">
-    <div class="label">{ label }</div>
-    <!-- TODO: Resolve svelte-ignore clause -->
-    <!-- svelte-ignore a11y_click_events_have_key_events -->
-    <toggle-button onclick={toggle} checked={checked ? "" : null} role="button" tabindex="0">
-        <div class="toggle-container">
-            <div class="toggle-bar"></div>
-            <div class="toggle-button"></div>
-        </div>
-    </toggle-button>
+	<div class="label">{label}</div>
+	<!-- TODO: Resolve svelte-ignore clause -->
+	<!-- svelte-ignore a11y_click_events_have_key_events -->
+	<toggle-button onclick={toggle} checked={checked ? '' : null} role="button" tabindex="0">
+		<div class="toggle-container">
+			<div class="toggle-bar"></div>
+			<div class="toggle-button"></div>
+		</div>
+	</toggle-button>
 </div>
 
 <style>
-    .main {
-        font-size: 0.875em;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+	.main {
+		font-size: 0.875em;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
 
-        margin-bottom: 8px;
-    }
+		margin-bottom: 8px;
+	}
 
-    .label {
-        display: flex;
-        align-items: center;
-    }
+	.label {
+		display: flex;
+		align-items: center;
+	}
 
-    toggle-button {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
+	toggle-button {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
 
-        /* Variables */
-        --transition-duration: 0.08s;
-        --bar-color: rgb(113, 113, 113);
-        --unchecked-opacity: 0.4;
-        --checked-opacity: 0.5;
-        --unchecked-button-color: #fafafa;
-        --checked-button-color: rgb(62, 166, 255);
-    }
+		/* Variables */
+		--transition-duration: 0.08s;
+		--bar-color: rgb(113, 113, 113);
+		--unchecked-opacity: 0.4;
+		--checked-opacity: 0.5;
+		--unchecked-button-color: #fafafa;
+		--checked-button-color: rgb(62, 166, 255);
+	}
 
 	.toggle-container {
 		display: inline-block;

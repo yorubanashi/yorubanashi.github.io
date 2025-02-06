@@ -1,54 +1,83 @@
 <!-- 笔记 -->
 
 <script>
-	import Markdown from "$lib/components/pages/Markdown.svelte";
+	import Markdown from '$lib/components/pages/Markdown.svelte';
 </script>
 
 <Markdown>
-    <h1>笔记</h1>
+	<h1>笔记</h1>
 
-    <h2>频道</h2>
-    <h3>厨师</h3>
-    <ul>
-        <li><a href="https://www.youtube.com/@CadenceGao/videos">Cadence Gao / 鞑厨高寒</a></li>
-        <li><a href="https://www.youtube.com/@chefwang/videos">王刚</a></li>
-    </ul>
-    <h3>杂</h3>
-    <ul>
-        <li><a href="https://www.youtube.com/@shuaisoserious">shuaisoserious</a></li>
-        <li><a href="https://www.youtube.com/@MandarinBean/videos">Mandarin Bean (graded readers)</a></li>
-    </ul>
+	<h2>频道</h2>
+	<h3>厨师</h3>
+	<ul>
+		<li><a href="https://www.youtube.com/@CadenceGao/videos">Cadence Gao / 鞑厨高寒</a></li>
+		<li><a href="https://www.youtube.com/@chefwang/videos">王刚</a></li>
+	</ul>
+	<h3>杂</h3>
+	<ul>
+		<li><a href="https://www.youtube.com/@shuaisoserious">shuaisoserious</a></li>
+		<li>
+			<a href="https://www.youtube.com/@MandarinBean/videos">Mandarin Bean (graded readers)</a>
+		</li>
+	</ul>
 
-    <h2>播客</h2>
-    <ul>
-        <li><a href="https://maomichinese.com/podcast/">MaoMi Chinese (网站有字幕)</a></li>
-        <li><a href="https://podcasts.apple.com/us/podcast/teatime-chinese-%E8%8C%B6%E6%AD%87%E4%B8%AD%E6%96%87/id1557463835">
-            TeaTime Chinese / 茶歇中文 (YouTube有字幕)
-        </a></li>
-        <li><a href="https://podcasts.apple.com/us/podcast/%E5%A4%A7%E9%B9%8F%E8%AF%B4%E4%B8%AD%E6%96%87-speak-chinese-with-da-peng/id1490732024">
-            Speak Chinese With Da Peng / 大鹏说中文 (YouTube有字幕)
-        </a></li>
-        <li><a href="https://podcasts.apple.com/us/podcast/taiwan-mandarin-with-local-podcast/id1611748660">Mandarin with Local (YT for subtitles)</a></li>
-        <li><a href="https://podcasts.apple.com/us/podcast/%E8%81%8A%E8%81%8A%E4%B8%9C%E8%A5%BF-talk-to-me-in-chinese/id1521247617">
-            聊聊东西 - Talk to Me in Chinese (YouTube有字幕)
-        </a></li>
-        <li><a href="https://podcasts.apple.com/us/podcast/learn-taiwanese-mandarin/id1502494666">
-            Learn Taiwanese Mandarin (网站有字幕)
-        </a></li>
-        <li><a href="https://podcasts.apple.com/us/podcast/%E9%82%84%E5%8F%AF%E4%B8%AD%E6%96%87-haike-mandarin/id1505176961">
-            Haike Mandarin / 還可中文 (没有字幕)
-        </a></li>
-    </ul>
+	<h2>播客</h2>
+	<ul>
+		<li><a href="https://maomichinese.com/podcast/">MaoMi Chinese (网站有字幕)</a></li>
+		<li>
+			<a
+				href="https://podcasts.apple.com/us/podcast/teatime-chinese-%E8%8C%B6%E6%AD%87%E4%B8%AD%E6%96%87/id1557463835"
+			>
+				TeaTime Chinese / 茶歇中文 (YouTube有字幕)
+			</a>
+		</li>
+		<li>
+			<a
+				href="https://podcasts.apple.com/us/podcast/%E5%A4%A7%E9%B9%8F%E8%AF%B4%E4%B8%AD%E6%96%87-speak-chinese-with-da-peng/id1490732024"
+			>
+				Speak Chinese With Da Peng / 大鹏说中文 (YouTube有字幕)
+			</a>
+		</li>
+		<li>
+			<a
+				href="https://podcasts.apple.com/us/podcast/taiwan-mandarin-with-local-podcast/id1611748660"
+				>Mandarin with Local (YT for subtitles)</a
+			>
+		</li>
+		<li>
+			<a
+				href="https://podcasts.apple.com/us/podcast/%E8%81%8A%E8%81%8A%E4%B8%9C%E8%A5%BF-talk-to-me-in-chinese/id1521247617"
+			>
+				聊聊东西 - Talk to Me in Chinese (YouTube有字幕)
+			</a>
+		</li>
+		<li>
+			<a href="https://podcasts.apple.com/us/podcast/learn-taiwanese-mandarin/id1502494666">
+				Learn Taiwanese Mandarin (网站有字幕)
+			</a>
+		</li>
+		<li>
+			<a
+				href="https://podcasts.apple.com/us/podcast/%E9%82%84%E5%8F%AF%E4%B8%AD%E6%96%87-haike-mandarin/id1505176961"
+			>
+				Haike Mandarin / 還可中文 (没有字幕)
+			</a>
+		</li>
+	</ul>
 
-    <h2>连续剧</h2>
-    <ul>
-        <li>偷偷藏不住</li>
-    </ul>
+	<h2>连续剧</h2>
+	<ul>
+		<li>偷偷藏不住</li>
+	</ul>
 
-    <h2>动画</h2>
-    <ul>
-        <li>爱上她的理由</li>
-    </ul>
+	<h2>动画</h2>
+	<ul>
+		<li>爱上她的理由</li>
+	</ul>
 
-    <div><a href="https://xiaoxue.eol.cn/fudao/yuwen/201507/t20150715_1288948.shtml">小学一至六年级生字表</a></div>
+	<div>
+		<a href="https://xiaoxue.eol.cn/fudao/yuwen/201507/t20150715_1288948.shtml"
+			>小学一至六年级生字表</a
+		>
+	</div>
 </Markdown>

@@ -62,7 +62,7 @@
 	<div id="menu-content">
 		<h2 id="menu-title">夜の思索</h2>
 		<div>
-			<input type="text" placeholder={ i18n.SEARCH } />
+			<input type="text" placeholder={i18n.SEARCH} />
 		</div>
 		<div>
 			<ul id="translate-list">
