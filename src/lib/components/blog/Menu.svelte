@@ -5,14 +5,15 @@
 	import { MENU } from '$lib/consts/i18n';
 	import { type Language, LanguageList, parseLanguageFromPathname } from '$lib/consts/languages';
 	import type { Dir } from '$lib/types/svelte';
+	import MenuItem from './MenuItem.svelte';
 
 	interface Props {
-		// Component Props
 		dir: Dir;
 		show: boolean;
 	}
 
 	let { dir, show }: Props = $props();
+	console.log(dir);
 
 	// Component Variables
 	// Translation / Language menu toggle + toggle function
@@ -40,11 +41,6 @@
 		}
 		return [selected, others];
 	};
-
-	// relativeLink appends the selected language's prefix onto the intended link.
-	let relativeLink = $derived((link: string) => {
-		return `${sl.linkPrefix}/${link}`;
-	});
 
 	// Component "Hooks" + More State
 	let ll = $state(refreshLanguageList());
@@ -96,8 +92,8 @@
 		<div id="navigation">
 			<ul>
 				{#if sl !== undefined && dir.dirs !== undefined}
-					{#each Object.entries(dir.dirs) as nav}
-						<li><a href={relativeLink(nav[1].link.addr)}>{nav[1].link.name}</a></li>
+					{#each Object.values(dir.dirs) as d}
+						<li><MenuItem dir={d} lang={sl} /></li>
 					{/each}
 				{/if}
 			</ul>
@@ -125,24 +121,26 @@
 		background-color: rgb(30, 30, 30);
 	}
 
-	a {
+	#menu :global(a) {
 		display: flex;
 		text-decoration: none;
 		color: var(--font-color);
 	}
 
-	a:hover {
+	#menu :global(a):hover {
 		color: var(--font-color-secondary);
 	}
 
 	ul {
 		list-style-type: none;
-		margin: 1em 0;
+		margin-top: 1em;
+		margin-bottom: 1em;
 		padding: 0;
 	}
 
-	li {
-		margin: 0.75em 0;
+	#menu :global(li) {
+		margin-top: 0.75em;
+		margin-bottom: 0.75em;
 	}
 
 	#menu-content {
