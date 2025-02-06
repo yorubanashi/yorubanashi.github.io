@@ -1,1 +1,1 @@
-{"dir":{"link":{"addr":"","name":"Home"}}}
+{"dir":{"dirs":{"miscellaneous":{"link":{"addr":"miscellaneous","name":"Miscellaneous"}},"swe":{"dirs":{"databases":{"link":{"addr":"swe/databases","name":"Databases"}},"interests":{"link":{"addr":"swe/interests","name":"Interests"}}},"link":{"addr":"swe","name":"SWE"}}},"link":{"addr":"","name":"Home"}}}

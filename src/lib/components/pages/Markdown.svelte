@@ -40,6 +40,11 @@
     #container :global(ul) {
 		margin-top: 0px;
         margin-bottom: 1em;
+		padding-inline-start: 30px;
+    }
+
+	#container :global(ul ul){
+        margin-bottom: 0em;
     }
 
     #container :global(li) {
