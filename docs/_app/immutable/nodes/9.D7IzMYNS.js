@@ -1,0 +1,1 @@
+import"../chunks/disclose-version.Bg9kRutz.js";import{a,t as e}from"../chunks/template.DCfFlnGe.js";import{M as n}from"../chunks/Markdown.BbzgrcZy.js";var p=e("<h1>Software Engineering</h1>");function l(o){n(o,{children:(r,s)=>{var t=p();a(r,t)},$$slots:{default:!0}})}export{l as component};

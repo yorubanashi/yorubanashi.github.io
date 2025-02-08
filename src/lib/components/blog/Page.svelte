@@ -66,6 +66,7 @@
 	/* https://stackoverflow.com/questions/46086483/how-to-apply-styles-to-slot-element-in-svelte */
 	#page-content > :global(:first-child) {
 		margin-top: 0;
+		padding-bottom: 1em;
 	}
 
 	#page-header .left,

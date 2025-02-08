@@ -58,4 +58,28 @@
 			<li>Eventually consistent: if the system functions long enough the data will converge</li>
 		</ul>
 	</div>
+
+    <h2>Memory & Disk</h2>
+    <ul>
+        <li><strong>Page</strong>: a fixed-length continuous block of <em>virtual</em> memory, described by an entry on the page table</li>
+        <li><strong>(Page) Frame</strong>: a fixed-length continuous block of <em>physical</em> memory (i.e., RAM)</li>
+        <li><strong>Page Table</strong>: a mapping, which lives in virtual memory, between pages to frames, or virtual addresses to physical addresses</li>
+        <li>Most implementations of virtual memory require hardware built into the CPU called a memory management unit (MMU).</li>
+    </ul>
+
+    <h3>Swap Space</h3>
+    <div>
+        <span>Swap space is the fallback on a hard disk and SSD for inactive data from RAM.</span>
+        <span>It allows the system to continue operating when RAM is full, and is often represented as a dedicated partition or swap file.</span>
+        <span>If resources are constantly being "swapped" from disk to RAM, it's a sign of a memory bottleneck.</span>
+    </div>
+    <h3>Dirty Memory</h3>
+    <div>
+        Dirty memory is memory representing data on disk that has been changed but not yet written to disk. Examples:
+    </div>
+    <ul>
+        <li>Memory containing buffered writes that have not been flushed to disk yet</li>
+        <li>Regions of memory-mapped files that have been updated but not written out to disk yet</li>
+        <li>Pages that are in the process of being written to swap space but have changed since the system started writing them to swap space</li>
+    </ul>
 </Markdown>
