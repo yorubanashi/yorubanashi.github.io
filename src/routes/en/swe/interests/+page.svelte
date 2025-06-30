@@ -7,8 +7,10 @@
 <Markdown>
 	<h1>Interests</h1>
 
-	<h2>Projects</h2>
+	<h2>Projects (ordered by perceived complexity)</h2>
 	<ul>
+		<li>Custom charts (stock prices, plotting my runs)</li>
+		<li>Webpage with syntax highlighting? Maybe canvas drawing on top?</li>
 		<li>
 			MacOS app (in Swift) that sends a notification every hour to stand an stretch. Only needs to
 			live in the menu bar?
@@ -16,17 +18,48 @@
 		<li>Custom service framework in Go: protobuf plugin. Result is HTTP RPC / gRPC server. Maybe support REST last</li>
 		<li>Convert any project with a canvas into a little Illustrator app</li>
 		<li>A Discord bot in Python... but why would I need one?</li>
+		<li>
+			Canvas - draw your own thing over local internet
+			(<a href="https://stackoverflow.com/questions/2368784/draw-on-html5-canvas-using-a-mouse">relevant</a>)
+		</li>
+		<li>Canvas - mini-Photoshop/Illustrator clone</li>
 		<li><strong>Difficult</strong>: Homelab, can start with a Raspberry Pi to garner interest</li>
 	</ul>
 
 	<h2>Explore</h2>
 	<ul>
-		<li>Advent of Code: How do the top players parse the input?</li>
-		<li>Offline DBs: zero copy tables, Spark, Iceberg</li>
 		<li>1point3acres -- Chinese hub for SWEs</li>
 		<li>Book: Designing Data-Intensive Applications (DDIA)</li>
+		<li>Book: Gergely's SWE handbook</li>
 		<li>tmux...</li>
         <li>Crypto Pals</li>
         <li>KC7Cyber</li>
+		<li>Starting a barebones Vite/React site:
+			<a href="https://github.com/vercel/vercel/tree/main/examples/vite-react">link</a>
+		</li>
+		<li>Rust???</li>
+	</ul>
+
+	<h2>Open Questions / System Design</h2>
+	<ul>
+		<li>Advent of Code: How do the top players parse the input?</li>
+		<li>Offline DBs: zero copy tables, Spark, Iceberg</li>
+		<li>How do big companies store logs and metrics if not Datadog?</li>
+		<li>How does disaggregated storage layers work (e.g., Aurora)?</li>
+		<li>S3 system design</li>
+		<li>Heap vs. Stack allocation (esp. in relation to Golang)</li>
+		<li>File descriptors, sockets, connections…</li>
+		<li>What are EC2 instances (VMs?), AWS Lambdas — how are both implemented?</li>
+		<li>inodes? stat & ls taking a long time. Fabian: try <code>ls -U1</code></li>
+		<li>Postgres WAL</li>
+		<li>iptables - adjusting ingress & egress</li>
+		<li>
+			IO and Disk
+			<ul>
+				<li><a href="https://planetscale.com/blog/io-devices-and-latency">PlanetScale blog</a></li>
+				<li>Physical vs. Logical Replication</li>
+				<li>Volume striping</li>
+			</ul>
+		</li>
 	</ul>
 </Markdown>

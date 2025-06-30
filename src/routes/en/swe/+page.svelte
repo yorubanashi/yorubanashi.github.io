@@ -6,4 +6,5 @@
 
 <Markdown>
 	<h1>Software Engineering</h1>
+	<div>There's nothing here currently. Browse the subpages!</div>
 </Markdown>
