@@ -60,7 +60,7 @@
 
 <aside id="menu" class={show ? 'show' : ''}>
 	<div id="menu-content">
-		<h2 id="menu-title">夜の思索</h2>
+		<h2 id="menu-title"><a href={sl.linkPrefix}>夜の思索</a></h2>
 		<div>
 			<input type="text" placeholder={i18n.SEARCH} />
 		</div>
