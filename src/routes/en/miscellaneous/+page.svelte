@@ -36,6 +36,8 @@
 	<ul>
 		<li>Cool Game Theory topics</li>
 		<li>Ergonomics: Moonlander keyboard</li>
-		<li>Google's <a href="https://grow.google/certificates/interview-warmup/">Interview Warmup</a></li>
+		<li>
+			Google's <a href="https://grow.google/certificates/interview-warmup/">Interview Warmup</a>
+		</li>
 	</ul>
 </Markdown>

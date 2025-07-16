@@ -13,7 +13,6 @@
 	}
 
 	let { dir, show }: Props = $props();
-	console.log(dir);
 
 	// Component Variables
 	// Translation / Language menu toggle + toggle function

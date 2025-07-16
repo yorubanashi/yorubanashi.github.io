@@ -15,12 +15,17 @@
 			MacOS app (in Swift) that sends a notification every hour to stand an stretch. Only needs to
 			live in the menu bar?
 		</li>
-		<li>Custom service framework in Go: protobuf plugin. Result is HTTP RPC / gRPC server. Maybe support REST last</li>
+		<li>
+			Custom service framework in Go: protobuf plugin. Result is HTTP RPC / gRPC server. Maybe
+			support REST last
+		</li>
 		<li>Convert any project with a canvas into a little Illustrator app</li>
 		<li>A Discord bot in Python... but why would I need one?</li>
 		<li>
-			Canvas - draw your own thing over local internet
-			(<a href="https://stackoverflow.com/questions/2368784/draw-on-html5-canvas-using-a-mouse">relevant</a>)
+			Canvas - draw your own thing over local internet (<a
+				href="https://stackoverflow.com/questions/2368784/draw-on-html5-canvas-using-a-mouse"
+				>relevant</a
+			>)
 		</li>
 		<li>Canvas - mini-Photoshop/Illustrator clone</li>
 		<li><strong>Difficult</strong>: Homelab, can start with a Raspberry Pi to garner interest</li>
@@ -32,9 +37,10 @@
 		<li>Book: Designing Data-Intensive Applications (DDIA)</li>
 		<li>Book: Gergely's SWE handbook</li>
 		<li>tmux...</li>
-        <li>Crypto Pals</li>
-        <li>KC7Cyber</li>
-		<li>Starting a barebones Vite/React site:
+		<li>Crypto Pals</li>
+		<li>KC7Cyber</li>
+		<li>
+			Starting a barebones Vite/React site:
 			<a href="https://github.com/vercel/vercel/tree/main/examples/vite-react">link</a>
 		</li>
 		<li>Rust???</li>

@@ -5,5 +5,5 @@
 </script>
 
 <Markdown>
-    <h1>メインページ</h1>
+	<h1>メインページ</h1>
 </Markdown>
