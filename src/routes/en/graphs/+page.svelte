@@ -27,6 +27,10 @@
             return { x: seconds, y: dp.price };
         });
 	};
+
+	let stockToggle = $state(false);
 </script>
 
-<Sparkline points={stockToPoints(data.stock[0])} />
+<button onclick={() => { stockToggle = !stockToggle }}>Switch DataSet</button>
+
+<Sparkline points={stockToggle ? stockToPoints(data.stock[0]) : stockToPoints(data.stock[1])} />
