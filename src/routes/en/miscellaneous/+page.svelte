@@ -32,6 +32,12 @@
 		<li>Oryx and Crake</li>
 	</ul>
 
+	<h2>Cooking</h2>
+	<ul>
+		<li>Sesame / Peanut Butter Noodles</li>
+		<li>下厨房</li>
+	</ul>
+
 	<h2>Dump</h2>
 	<ul>
 		<li>Cool Game Theory topics</li>

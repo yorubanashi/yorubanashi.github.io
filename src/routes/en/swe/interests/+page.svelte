@@ -28,7 +28,12 @@
 			>)
 		</li>
 		<li>Canvas - mini-Photoshop/Illustrator clone</li>
-		<li><strong>Difficult</strong>: Homelab, can start with a Raspberry Pi to garner interest</li>
+		<li>
+			<strong>Difficult</strong>: Homelab, can start with a Raspberry Pi to garner interest (Intel NUC? Free/TrueNAS?)
+			<ul>
+				<li>https://codecaptured.com/blog/my-ultimate-self-hosting-setup/</li>
+			</ul>
+		</li>
 	</ul>
 
 	<h2>Explore</h2>
@@ -54,11 +59,24 @@
 		<li>How does disaggregated storage layers work (e.g., Aurora)?</li>
 		<li>S3 system design</li>
 		<li>Heap vs. Stack allocation (esp. in relation to Golang)</li>
+		<li>mutex vs. channels (Golang)</li>
 		<li>File descriptors, sockets, connections…</li>
 		<li>What are EC2 instances (VMs?), AWS Lambdas — how are both implemented?</li>
 		<li>inodes? stat & ls taking a long time. Fabian: try <code>ls -U1</code></li>
 		<li>Postgres WAL</li>
 		<li>iptables - adjusting ingress & egress</li>
+		<li>Paxos vs. Raft (esp. in context of DBs). What were the bottlenecks of Paxos for enterprise DBs?</li>
+		<li>Red-Black trees</li>
+		<li>Consistent Hashing</li>
+		<li>SPIFFE Spire (+ Istio)</li>
+		<li>BGP, DNS</li>
+		<li>Kafka</li>
+		<li>
+			Postgres
+			<ul>
+				<li>Transaction ID [wraparound]</li>
+				<li>Vacuums..., dead tuples, etc...</li>
+			</ul></li>
 		<li>
 			IO and Disk
 			<ul>
