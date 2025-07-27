@@ -1,7 +1,4 @@
-export interface Point {
-	x: number;
-	y: number;
-}
+export const TRANSITION_DURATION = 250; // in milliseconds
 
 export interface Bounds {
     minX: number;
@@ -11,6 +8,11 @@ export interface Bounds {
     // For determining stroke color...
     startY: number;
     endY: number;
+}
+
+export interface Point {
+	x: number;
+	y: number;
 }
 
 export enum StrokeColor {

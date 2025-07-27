@@ -31,6 +31,7 @@
 	let stockToggle = $state(false);
 </script>
 
+<!-- This is firing twice occasionally; fix by adding a timeout? -->
 <button onclick={() => { stockToggle = !stockToggle }}>Switch DataSet</button>
 
 <Sparkline points={stockToggle ? stockToPoints(data.stock[0]) : stockToPoints(data.stock[1])} />
