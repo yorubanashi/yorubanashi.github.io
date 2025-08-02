@@ -1,1 +1,0 @@
-import"../chunks/disclose-version.Bg9kRutz.js";import{a,t as p}from"../chunks/template.CEwpXTOK.js";import{M as e}from"../chunks/Markdown.CMcNPlx4.js";var s=p("<h1>メインページ</h1>");function d(o){e(o,{children:(t,m)=>{var r=s();a(t,r)},$$slots:{default:!0}})}export{d as component};

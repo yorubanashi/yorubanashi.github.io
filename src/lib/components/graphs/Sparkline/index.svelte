@@ -16,39 +16,35 @@
     
     let settings = $derived(calculateSettings(points));
 
-    let previousPoints: Point[] | undefined = undefined;
+    let isFirstRender = $state(true);
     $effect(() => {
+        if (points.length === 0) return;
+
         untrack(() => {
-            if (previousPoints === undefined) {
-                // First time? Skip the transition, directly set the path, & set previous points.
-                previousPoints = points;
+            if (isFirstRender) {
                 path = calculatePath(points, width, height);
-                return;
+                isFirstRender = false;
+            } else {
+                transition(points);
             }
-
-            transition(previousPoints, points)
         });
-
-        previousPoints = points;
     });
 
     let animationID = $state<number>(0);
-    const transition = (prev: Point[], curr: Point[]) => {
+    const transition = (points: Point[]) => {
         const start = Date.now();
-        const interpolateFunc = interpolatePath(calculatePath(prev, width, height), calculatePath(curr, width, height));
+        const interpolateFunc = interpolatePath(path, calculatePath(points, width, height));
 
         const animate = () => {
             const elapsed = Date.now() - start;
             const progress = Math.min(elapsed / TRANSITION_DURATION, 1);
 
-            let interpolated = interpolateFunc(progress);
-            path = interpolated;
-
+            path = interpolateFunc(progress);
             if (progress < 1) {
                 animationID = requestAnimationFrame(animate);
             } else {
                 // Once progress is at 100%, set path to final path that was just passed in.
-                path = calculatePath(curr, width, height);
+                path = calculatePath(points, width, height);
             }
         };
 

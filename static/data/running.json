@@ -1,0 +1,75 @@
+[
+    {
+        "date": "2025-06-29",
+        "times": [
+            { "time": "26:00", "mile": 2 },
+            { "time": "30:00", "mile": 2.28 },
+            { "time": "40:22", "mile": 3 },
+            { "time": "44:21", "mile": 3.15 }
+        ],
+        "notes": "AC and fans felt good today. Mile 1 doesn't exist because I forgot to record it."
+    },
+    {
+        "date": "2025-07-02",
+        "times": [
+            { "time": "11:40", "mile": 1 },
+            { "time": "24:05", "mile": 2 },
+            { "time": "30:00", "mile": 2.42 },
+            { "time": "31:37", "mile": 2.58 }
+        ]
+    },
+    {
+        "date": "2025-07-06",
+        "times": [
+            { "time": "11:08", "mile": 1 },
+            { "time": "23:39", "mile": 2 },
+            { "time": "30:00", "mile": 2.51 },
+            { "time": "34:00", "mile": 2.79 }
+        ],
+        "notes": "There was a dude running next to me, so I felt the competition."
+    },
+    {
+        "date": "2025-07-10",
+        "times": [
+            { "time": "11:28", "mile": 1 },
+            { "time": "23:36", "mile": 2 },
+            { "time": "27:07", "mile": 2.25 }
+        ],
+        "notes": "Hot as dicks today, and no 32 cool shirt."
+    },
+    {
+        "date": "2025-07-14",
+        "times": [
+            { "time": "10:57", "mile": 1 },
+            { "time": "22:31", "mile": 2 },
+            { "time": "28:11", "mile": 2.42 }
+        ]
+    },
+    {
+        "date": "2025-07-16",
+        "times": [
+            { "time": "10:50", "mile": 1 },
+            { "time": "21:57", "mile": 2 },
+            { "time": "27:10", "mile": 2.41 }
+        ]
+    },
+    {
+        "date": "2025-07-27",
+        "times": [
+            { "time": "10:48", "mile": 1 },
+            { "time": "22:07", "mile": 2 },
+            { "time": "30:00", "mile": 2.67 },
+            { "time": "33:30", "mile": 2.95 }
+        ],
+        "notes": "Pulled the safety key at minute 4, so may not be entirely accurate."
+    },
+    {
+        "date": "2025-07-30",
+        "times": [
+            { "time": "09:57", "mile": 1 },
+            { "time": "21:23", "mile": 2 },
+            { "time": "30:00", "mile": 2.68 },
+            { "time": "33:00", "mile": 2.97 }
+        ]
+    }
+]

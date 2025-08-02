@@ -1,85 +1,63 @@
 <!-- Exercise -->
 
 <script lang="ts">
-	import Markdown from '$lib/components/pages/Markdown.svelte';
+	import type { Point } from '$lib/components/graphs/Sparkline/types';
+	import Sparkline from '$lib/components/graphs/Sparkline/index.svelte';
 
-	interface Duration {
-		minute: number;
-		second: number;
+	interface MileTime {
+		time: string;
+		mile: number;
+
+		timeSeconds?: number;
 	}
-	const duration = (minute: number, second: number): Duration => {
-		return { minute: minute, second: second };
-	};
+	interface DailyRun {
+		date: string;
+		times: MileTime[];
+		notes: string;
 
-	interface RunRecord {
-		date: Date;
-
-		mile1?: Duration;
-		mile2?: Duration;
-		mile3?: Duration;
-
-		minute30?: number;
-		final: [Duration, number]; // time, mile
-
-		temp?: number; // Outside temperature in Fahrenheit (doesn't matter too much, but is a reference point)
-		notes?: string;
+		dateMS?: number;
+	}
+	interface RunningResponse {
+		running: DailyRun[];
 	}
 
-	// Helper to wrap the stupid monthIndex interaction
-	const date = (year: number, month: number, day: number): Date => {
-		return new Date(year, month - 1, day);
-	};
-	const runRecords: RunRecord[] = [
-		{
-			date: date(2025, 6, 29),
-			mile2: duration(26, 0),
-			mile3: duration(40, 22),
-			minute30: 2.28,
-			final: [duration(44, 21), 3.15],
-			temp: 83,
-			notes: 'AC and fans felt good today.'
-		}
-	];
+	interface Props {
+		data: RunningResponse;
+	}
+	let { data }: Props = $props();
 
-	const padZero = (num: number): string => {
-		return num.toString().padStart(2, '0');
-	};
-	const formatDate = (date: Date): string => {
-		return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
-	};
-	const formatDuration = (duration: Duration): string => {
-		return `${padZero(duration.minute)}:${padZero(duration.second)}`;
-	};
+	let derivedData = $derived.by((): DailyRun[] => {
+		return data.running.map((dr) => {
+			dr.times.forEach((time) => {
+				const [min, sec] = time.time.split(":").map(Number);
+				time.timeSeconds = (min * 60) + sec;
+			});
+			dr.dateMS = new Date(dr.date).getTime();
+			return dr;
+		});
+	});
+
+	// The || fallback shouldn't be used, but I didn't want to create a bunch of types for the post-derived form...
+	type RunToPoint = (mts: MileTime[]) => number;
+	const milesRun: RunToPoint = (mts) => {
+		return mts.at(-1)?.mile || 0;
+	}
+	const averagePace: RunToPoint = (mts) => {
+		const lastMT = mts.at(-1);
+		if (lastMT === undefined) return -1;
+		if (lastMT.timeSeconds === undefined) return -1;
+
+		return lastMT.mile / (lastMT.timeSeconds / 3600);
+	}
+	const dataToPoints = (callback: RunToPoint): Point[] => {
+		return derivedData.map((dr): Point => {
+			return { x: dr.dateMS || 0, y: callback(dr.times) };
+		});
+	}
+
+	let currentPoints = $state<Point[]>(dataToPoints(milesRun));
 </script>
 
-<Markdown>
-	<h1>Exercise</h1>
-
-	<ul>
-		{#each runRecords as record}
-			<li>
-				{formatDate(record.date)}: {record.final[1]} miles in {formatDuration(record.final[0])}
-				{#if record.temp}
-					in {record.temp} degree weather
-				{/if}
-				<ul>
-					{#if record.mile1}
-						<li>Mile 1 in {formatDuration(record.mile1)}</li>
-					{/if}
-					{#if record.mile2}
-						<li>Mile 2 in {formatDuration(record.mile2)}</li>
-					{/if}
-					{#if record.mile3}
-						<li>Mile 3 in {formatDuration(record.mile3)}</li>
-					{/if}
-					{#if record.minute30}
-						<li>In 30 minutes, ran {record.minute30} miles</li>
-					{/if}
-					{#if record.notes}
-						<li>Notes: {record.notes}</li>
-					{/if}
-				</ul>
-			</li>
-		{/each}
-	</ul>
-</Markdown>
+<button onclick={() => { currentPoints = dataToPoints(milesRun) }}>Miles Run</button>
+<button onclick={() => { currentPoints = dataToPoints(averagePace) }}>Average Pace</button>
+<Sparkline points={currentPoints} />

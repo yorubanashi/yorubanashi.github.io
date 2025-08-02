@@ -1,0 +1,1 @@
+import{ab as e,ac as t,a0 as c}from"./runtime.BGmCDs9U.js";function f(n){throw new Error("lifecycle_outside_component")}function u(n){e===null&&f(),t(()=>{const o=c(n);if(typeof o=="function")return o})}export{u as o};
