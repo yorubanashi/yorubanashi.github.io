@@ -4,5 +4,5 @@ export async function load({ fetch }) {
 	if (data.error !== undefined) {
 		throw new Error("Contact the developer. We shouldn't be here.");
 	}
-	return { "running": data };
+	return { running: data };
 }

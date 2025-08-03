@@ -29,7 +29,8 @@
 		</li>
 		<li>Canvas - mini-Photoshop/Illustrator clone</li>
 		<li>
-			<strong>Difficult</strong>: Homelab, can start with a Raspberry Pi to garner interest (Intel NUC? Free/TrueNAS?)
+			<strong>Difficult</strong>: Homelab, can start with a Raspberry Pi to garner interest (Intel
+			NUC? Free/TrueNAS?)
 			<ul>
 				<li>https://codecaptured.com/blog/my-ultimate-self-hosting-setup/</li>
 			</ul>
@@ -65,7 +66,10 @@
 		<li>inodes? stat & ls taking a long time. Fabian: try <code>ls -U1</code></li>
 		<li>Postgres WAL</li>
 		<li>iptables - adjusting ingress & egress</li>
-		<li>Paxos vs. Raft (esp. in context of DBs). What were the bottlenecks of Paxos for enterprise DBs?</li>
+		<li>
+			Paxos vs. Raft (esp. in context of DBs). What were the bottlenecks of Paxos for enterprise
+			DBs?
+		</li>
 		<li>Red-Black trees</li>
 		<li>Consistent Hashing</li>
 		<li>SPIFFE Spire (+ Istio)</li>
@@ -76,7 +80,8 @@
 			<ul>
 				<li>Transaction ID [wraparound]</li>
 				<li>Vacuums..., dead tuples, etc...</li>
-			</ul></li>
+			</ul>
+		</li>
 		<li>
 			IO and Disk
 			<ul>
