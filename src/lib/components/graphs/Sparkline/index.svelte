@@ -2,6 +2,7 @@
 	import { untrack } from 'svelte';
 	import {
 		type Point,
+		FILL_PATTERN_ID,
 		FILL_DOT_OPACITY,
 		FILL_DOT_RADIUS,
 		FILL_DOT_SPACING,
@@ -9,6 +10,8 @@
 		TRANSITION_DURATION
 	} from './types';
 	import { calculateColor, calculatePath, closePath, interpolateColor } from './utils';
+	import FillPattern from './FillPattern.svelte';
+	import LineScrub from './LineScrub.svelte';
 
 	import { interpolatePath } from 'd3-interpolate-path';
 
@@ -37,8 +40,8 @@
 		});
 	});
 
-    // Used to cancel the current animation, if another one kicks of during this one
-    // Unlikely, so unused right now...
+	// Used to cancel the current animation, if another one kicks of during this one
+	// Unlikely, so unused right now...
 	let animationID = $state<number>(0);
 	const easeOutQuart = (x: number) => {
 		return 1 - (1 - x) ** 4;
@@ -71,49 +74,65 @@
 		animationID = requestAnimationFrame(animate);
 	};
 
-	const FILL_PATTERN_ID = 'fill-pattern';
+	// Scrub handlers: maybe we should have another element to wrap this one?
+	let showScrubber = $state(false);
+    let xPosition = $state(0);
+    let sparklineRef = $state<HTMLDivElement>();
+	const onMouseEnter = () => {
+		showScrubber = true;
+	};
+	const onMouseLeave = () => {
+		showScrubber = false;
+	};
+    const onMouseMove = (event: MouseEvent) => {
+        if (sparklineRef === undefined) return;
+        xPosition = Math.max(0, event.clientX - sparklineRef.getBoundingClientRect().left);
+    };
 </script>
 
-<div>
-	<div id="sparkline" bind:clientWidth={width} bind:clientHeight={height}>
-		<svg width="100%" height="100%">
-			<defs>
-				<pattern
-					id={FILL_PATTERN_ID}
-					patternUnits="userSpaceOnUse"
-					width={FILL_DOT_SPACING}
-					height={FILL_DOT_SPACING}
-					x="0"
-					y="0"
-				>
-					<g>
-						<rect fill="transparent" height={FILL_DOT_SPACING} width={FILL_DOT_SPACING}></rect>
-						<circle
-							fill={strokeColor}
-							fill-opacity={FILL_DOT_OPACITY}
-							cx="1"
-							cy="1"
-							r={FILL_DOT_RADIUS}
-						></circle>
-					</g>
-				</pattern>
-			</defs>
-
-			<path
-				d={path}
-				stroke={strokeColor}
-				stroke-width={STROKE_WIDTH}
-				stroke-linecap="round"
-				stroke-linejoin="round"
-				fill="none"
+<!-- I'm struggling a bit with this one... -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+<div
+	id="sparkline"
+    bind:this={sparklineRef}
+	bind:clientWidth={width}
+	bind:clientHeight={height}
+	onmouseenter={onMouseEnter}
+	onmouseleave={onMouseLeave}
+    onmousemove={onMouseMove}
+>
+	<svg class="no-pointers" width="100%" height="100%">
+		<defs>
+			<FillPattern
+				id={FILL_PATTERN_ID}
+				color={strokeColor}
+				opacity={FILL_DOT_OPACITY}
+				radius={FILL_DOT_RADIUS}
+				spacing={FILL_DOT_SPACING}
 			/>
-			<path fill="url(#{FILL_PATTERN_ID})" d={closePath(path, width, height)} />
-		</svg>
-	</div>
+		</defs>
+
+		<path
+			d={path}
+			stroke={strokeColor}
+			stroke-width={STROKE_WIDTH}
+			stroke-linecap="round"
+			stroke-linejoin="round"
+			fill="none"
+		/>
+		<path fill="url(#{FILL_PATTERN_ID})" d={closePath(path, width, height)} />
+	</svg>
+
+	<LineScrub color={strokeColor} {height} show={showScrubber} xPosition={xPosition} />
 </div>
 
 <style>
 	#sparkline {
+		position: relative;
 		height: 320px;
 	}
+
+    .no-pointers {
+        pointer-events: none;
+    }
 </style>

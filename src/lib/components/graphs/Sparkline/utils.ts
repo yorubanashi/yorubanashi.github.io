@@ -7,11 +7,14 @@ export const calculateBounds = (points: Point[]): Bounds => {
 	const ys: number[] = points.map((point: Point): number => {
 		return point.y;
 	});
+	const minY = Math.min(...ys);
+	const maxY = Math.max(...ys);
+	const padY = (maxY - minY) * 0.05;
 	return {
 		minX: Math.min(...xs),
 		maxX: Math.max(...xs),
-		minY: Math.min(...ys),
-		maxY: Math.max(...ys),
+		minY: minY - padY,
+		maxY: maxY + padY,
 		startY: points[0].y,
 		endY: points[points.length - 1].y
 	};

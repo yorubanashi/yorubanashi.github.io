@@ -1,1 +1,0 @@
-import"./disclose-version.Bg9kRutz.js";import{p as o,a as s,c as e,r as p}from"./runtime.BGmCDs9U.js";import{a as d,t as n}from"./template.CnqaD_G8.js";import{s as m}from"./snippet.Dwl4_wQh.js";var v=n('<div id="container" class="svelte-1v744i6"><!></div>');function u(t,r){s(r,!0);var a=v(),i=e(a);m(i,()=>r.children),p(a),d(t,a),o()}export{u as M};

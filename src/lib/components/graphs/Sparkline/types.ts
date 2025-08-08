@@ -1,3 +1,5 @@
+// Should these just be local to the Svelte file? Why import these?
+export const FILL_PATTERN_ID = 'fill-pattern';
 export const FILL_DOT_OPACITY = 0.2;
 export const FILL_DOT_RADIUS = 1;
 export const FILL_DOT_SPACING = 4;

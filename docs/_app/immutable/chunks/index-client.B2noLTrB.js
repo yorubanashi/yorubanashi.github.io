@@ -1,0 +1,1 @@
+import{ad as e,ae as t,u as c}from"./runtime.Cg5DD4HJ.js";function u(n){throw new Error("lifecycle_outside_component")}function r(n){e===null&&u(),t(()=>{const o=c(n);if(typeof o=="function")return o})}export{r as o};

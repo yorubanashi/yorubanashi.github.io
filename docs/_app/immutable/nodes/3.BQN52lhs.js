@@ -1,1 +1,0 @@
-import"../chunks/disclose-version.Bg9kRutz.js";import{n as a}from"../chunks/runtime.BGmCDs9U.js";import{a as e,t as p}from"../chunks/template.CnqaD_G8.js";import{M as m}from"../chunks/Markdown.BCPiIazT.js";var n=p("<h1>首页</h1> <div>这里没有东西！左边的选单有些链接可以浏览。</div>",1);function v(o){m(o,{children:(t,s)=>{var r=n();a(2),e(t,r)},$$slots:{default:!0}})}export{v as component};
