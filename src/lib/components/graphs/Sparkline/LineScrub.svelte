@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { STROKE_WIDTH } from './types';
+	import { STROKE_WIDTH } from '$lib/consts/Sparkline';
 
 	interface Props {
 		color: string;
@@ -7,16 +7,21 @@
 
 		show: boolean;
 		showMask: boolean;
-        xPosition: number;
+		xPosition: number;
 	}
 	let { color, height, show, showMask, xPosition }: Props = $props();
 
 	const STROKE_DASH_ARRAY = '2,4';
-    const translateX = (x: number) => { return `transform: translateX(${x}px);`; }
+	const translateX = (x: number) => {
+		return `transform: translateX(${x}px);`;
+	};
 </script>
 
 <div id="container" class="anchor">
-	<div class={`mask anchor ${showMask && show ? 'show-mask' : 'hide'}`} style={translateX(xPosition)}></div>
+	<div
+		class={`mask anchor ${showMask && show ? 'show-mask' : 'hide'}`}
+		style={translateX(xPosition)}
+	></div>
 
 	<div class={`lineContainer ${show ? 'show' : 'hide'}`} style={translateX(xPosition)}>
 		<svg class="lineContainer">
@@ -49,9 +54,9 @@
 		opacity: 0.6;
 	}
 
-    .show {
-        opacity: 1;
-    }
+	.show {
+		opacity: 1;
+	}
 
 	.lineContainer {
 		height: 100%;

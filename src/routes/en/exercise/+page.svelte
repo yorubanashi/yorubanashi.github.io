@@ -1,8 +1,8 @@
 <!-- Exercise -->
 
 <script lang="ts">
-	import type { Point } from '$lib/components/graphs/Sparkline/types';
-	import Sparkline from '$lib/components/graphs/Sparkline/index.svelte';
+	import type { Point } from '$lib/types/Sparkline';
+	import SparklineWithHeader from '$lib/components/graphs/SparklineWithHeader/index.svelte';
 
 	interface MileTime {
 		time: string;
@@ -68,4 +68,4 @@
 		currentPoints = dataToPoints(averagePace);
 	}}>Average Pace</button
 >
-<Sparkline points={currentPoints} />
+<SparklineWithHeader points={currentPoints} />

@@ -2,26 +2,24 @@
 	import { interpolatePath } from 'd3-interpolate-path';
 	import { untrack } from 'svelte';
 
+	import FillPattern from './FillPattern.svelte';
+	import LineScrub from './LineScrub.svelte';
 	import {
-		type Point,
 		FILL_PATTERN_ID,
-		FILL_DOT_OPACITY,
-		FILL_DOT_RADIUS,
-		FILL_DOT_SPACING,
 		PADDING,
 		STROKE_WIDTH,
 		TRANSITION_DURATION
-	} from './types';
-	import { calculateBounds, calculateColor, calculatePath, closePath, interpolateColor } from './utils';
-	import FillPattern from './FillPattern.svelte';
-	import LineScrub from './LineScrub.svelte';
+	} from '$lib/consts/Sparkline';
 	import { bisectCenter, invert } from '$lib/d3/array';
+	import { interpolateColor } from '$lib/d3/interpolate';
+	import { calculateBounds, calculateColor, calculatePath, closePath } from '$lib/d3/path';
+	import { type Point } from '$lib/types/Sparkline';
 
 	interface Props {
 		points: Point[];
 	}
 	let { points }: Props = $props();
-	let bounds = $derived(calculateBounds(points))
+	let bounds = $derived(calculateBounds(points));
 	let xs = $derived(points.map((point) => point.x));
 
 	let path = $state<string>('');
@@ -36,8 +34,8 @@
 
 		untrack(() => {
 			if (isFirstRender) {
-				path = calculatePath(points, bounds, width, height);
-				strokeColor = calculateColor(points, bounds);
+				path = calculatePath(points, bounds, width, height, PADDING);
+				strokeColor = calculateColor(bounds);
 				isFirstRender = false;
 			} else {
 				transition(points);
@@ -53,10 +51,13 @@
 	};
 	const transition = (points: Point[]) => {
 		const start = Date.now();
-		const interpolateFunc = interpolatePath(path, calculatePath(points, bounds, width, height));
+		const interpolateFunc = interpolatePath(
+			path,
+			calculatePath(points, bounds, width, height, PADDING)
+		);
 
 		const currColor = strokeColor;
-		const nextColor = calculateColor(points, bounds);
+		const nextColor = calculateColor(bounds);
 
 		const animate = () => {
 			const elapsed = Date.now() - start;
@@ -70,7 +71,7 @@
 				animationID = requestAnimationFrame(animate);
 			} else {
 				// Once progress is at 100%, set path to final path that was just passed in.
-				path = calculatePath(points, bounds, width, height);
+				path = calculatePath(points, bounds, width, height, PADDING);
 				strokeColor = nextColor;
 			}
 		};
@@ -83,17 +84,17 @@
 	let focusedPoint = $state<Point>();
 	let showScrubber = $state(false);
 	// TODO: Make this configurable
-	let snapPoint = $state(true);
-    let sparklineRef = $state<HTMLDivElement>();
-    let xPosition = $state(0);
+	let snapPoint = $state(false);
+	let sparklineRef = $state<HTMLDivElement>();
+	let xPosition = $state(0);
 	const onMouseEnter = () => {
 		showScrubber = true;
 	};
 	const onMouseLeave = () => {
 		showScrubber = false;
 	};
-    const onMouseMove = (event: MouseEvent) => {
-        if (sparklineRef === undefined) return;
+	const onMouseMove = (event: MouseEvent) => {
+		if (sparklineRef === undefined) return;
 
 		const chartPos = Math.max(0, event.clientX - sparklineRef.getBoundingClientRect().left);
 		if (snapPoint) {
@@ -116,31 +117,25 @@
 			xPosition = pointXPos;
 			focusedPoint = { x: pointXPos, y: pointYPos };
 		} else {
-			xPosition = chartPos
+			xPosition = chartPos;
 		}
-    };
+	};
 </script>
 
 <!-- I'm struggling a bit with this one... -->
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <div
 	id="sparkline"
-    bind:this={sparklineRef}
+	bind:this={sparklineRef}
 	bind:clientWidth={width}
 	bind:clientHeight={height}
 	onmouseenter={onMouseEnter}
 	onmouseleave={onMouseLeave}
-    onmousemove={onMouseMove}
+	onmousemove={onMouseMove}
 >
 	<svg class="no-pointers" width="100%" height="100%">
 		<defs>
-			<FillPattern
-				id={FILL_PATTERN_ID}
-				color={strokeColor}
-				opacity={FILL_DOT_OPACITY}
-				radius={FILL_DOT_RADIUS}
-				spacing={FILL_DOT_SPACING}
-			/>
+			<FillPattern color={strokeColor} />
 		</defs>
 
 		<path
@@ -153,12 +148,13 @@
 		/>
 
 		{#if showScrubber && snapPoint && focusedPoint !== undefined}
-			<circle fill={strokeColor} cx={focusedPoint.x} cy={focusedPoint.y} r={STROKE_WIDTH * 2}></circle>
+			<circle fill={strokeColor} cx={focusedPoint.x} cy={focusedPoint.y} r={STROKE_WIDTH * 2}
+			></circle>
 		{/if}
 		<path fill="url(#{FILL_PATTERN_ID})" d={closePath(path, width, height)} />
 	</svg>
 
-	<LineScrub color={strokeColor} {height} show={showScrubber} showMask={!snapPoint} xPosition={xPosition} />
+	<LineScrub color={strokeColor} {height} show={showScrubber} showMask={!snapPoint} {xPosition} />
 </div>
 
 <style>
@@ -167,7 +163,7 @@
 		height: 320px;
 	}
 
-    .no-pointers {
-        pointer-events: none;
-    }
+	.no-pointers {
+		pointer-events: none;
+	}
 </style>
