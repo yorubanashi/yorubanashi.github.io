@@ -6,16 +6,17 @@
 		height: number;
 
 		show: boolean;
-        xPosition: number
+		showMask: boolean;
+        xPosition: number;
 	}
-	let { color, height, show, xPosition }: Props = $props();
+	let { color, height, show, showMask, xPosition }: Props = $props();
 
 	const STROKE_DASH_ARRAY = '2,4';
     const translateX = (x: number) => { return `transform: translateX(${x}px);`; }
 </script>
 
 <div id="container" class="anchor">
-	<div class={`mask anchor ${show ? 'show-mask' : 'hide'}`} style={translateX(xPosition)}></div>
+	<div class={`mask anchor ${showMask && show ? 'show-mask' : 'hide'}`} style={translateX(xPosition)}></div>
 
 	<div class={`lineContainer ${show ? 'show' : 'hide'}`} style={translateX(xPosition)}>
 		<svg class="lineContainer">
@@ -52,7 +53,6 @@
         opacity: 1;
     }
 
-	/* TODO: How can we control this with JS? */
 	.lineContainer {
 		height: 100%;
 		width: 2;

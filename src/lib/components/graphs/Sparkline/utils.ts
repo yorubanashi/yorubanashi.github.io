@@ -20,10 +20,10 @@ export const calculateBounds = (points: Point[]): Bounds => {
 	};
 };
 
-export const calculatePath = (points: Point[], width: number, height: number): string => {
-	const bounds = calculateBounds(points);
+export const calculatePath = (points: Point[], bounds: Bounds, width: number, height: number): string => {
+	// We only pad the width to allow the full line to show and not clip.
+	// Height is already padded in the bound calculation.
 	width -= PADDING * 2;
-	height -= PADDING * 2;
 	return points.reduce((path: string, point: Point, index: number): string => {
 		const xRange = bounds.maxX - bounds.minX;
 		const xRatio = (point.x - bounds.minX) / xRange;
@@ -33,9 +33,9 @@ export const calculatePath = (points: Point[], width: number, height: number): s
 		const y = height - yRatio * height;
 
 		if (index === 0) {
-			return `M ${x + PADDING} ${y + PADDING}`;
+			return `M ${x + PADDING} ${y}`;
 		}
-		return `${path} L ${x + PADDING} ${y + PADDING}`;
+		return `${path} L ${x + PADDING} ${y}`;
 	}, '');
 };
 
@@ -45,8 +45,7 @@ export const closePath = (path: string, width: number, height: number): string =
 	return path + `${brLine}${blLine}Z`; // Z closes out the path by implicitly going back to the first point
 };
 
-export const calculateColor = (points: Point[]): string => {
-	const bounds = calculateBounds(points);
+export const calculateColor = (points: Point[], bounds: Bounds): string => {
 	return bounds.startY < bounds.endY ? StrokeColor.StockGreen : StrokeColor.StockRed;
 };
 

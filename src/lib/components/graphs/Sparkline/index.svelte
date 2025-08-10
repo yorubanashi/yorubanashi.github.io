@@ -1,24 +1,29 @@
 <script lang="ts">
+	import { interpolatePath } from 'd3-interpolate-path';
 	import { untrack } from 'svelte';
+
 	import {
 		type Point,
 		FILL_PATTERN_ID,
 		FILL_DOT_OPACITY,
 		FILL_DOT_RADIUS,
 		FILL_DOT_SPACING,
+		PADDING,
 		STROKE_WIDTH,
 		TRANSITION_DURATION
 	} from './types';
-	import { calculateColor, calculatePath, closePath, interpolateColor } from './utils';
+	import { calculateBounds, calculateColor, calculatePath, closePath, interpolateColor } from './utils';
 	import FillPattern from './FillPattern.svelte';
 	import LineScrub from './LineScrub.svelte';
-
-	import { interpolatePath } from 'd3-interpolate-path';
+	import { bisectCenter, invert } from '$lib/d3/array';
 
 	interface Props {
 		points: Point[];
 	}
 	let { points }: Props = $props();
+	let bounds = $derived(calculateBounds(points))
+	let xs = $derived(points.map((point) => point.x));
+
 	let path = $state<string>('');
 	let strokeColor = $state<string>('');
 
@@ -31,8 +36,8 @@
 
 		untrack(() => {
 			if (isFirstRender) {
-				path = calculatePath(points, width, height);
-				strokeColor = calculateColor(points);
+				path = calculatePath(points, bounds, width, height);
+				strokeColor = calculateColor(points, bounds);
 				isFirstRender = false;
 			} else {
 				transition(points);
@@ -48,10 +53,10 @@
 	};
 	const transition = (points: Point[]) => {
 		const start = Date.now();
-		const interpolateFunc = interpolatePath(path, calculatePath(points, width, height));
+		const interpolateFunc = interpolatePath(path, calculatePath(points, bounds, width, height));
 
 		const currColor = strokeColor;
-		const nextColor = calculateColor(points);
+		const nextColor = calculateColor(points, bounds);
 
 		const animate = () => {
 			const elapsed = Date.now() - start;
@@ -65,7 +70,7 @@
 				animationID = requestAnimationFrame(animate);
 			} else {
 				// Once progress is at 100%, set path to final path that was just passed in.
-				path = calculatePath(points, width, height);
+				path = calculatePath(points, bounds, width, height);
 				strokeColor = nextColor;
 			}
 		};
@@ -75,9 +80,12 @@
 	};
 
 	// Scrub handlers: maybe we should have another element to wrap this one?
+	let focusedPoint = $state<Point>();
 	let showScrubber = $state(false);
-    let xPosition = $state(0);
+	// TODO: Make this configurable
+	let snapPoint = $state(true);
     let sparklineRef = $state<HTMLDivElement>();
+    let xPosition = $state(0);
 	const onMouseEnter = () => {
 		showScrubber = true;
 	};
@@ -86,7 +94,30 @@
 	};
     const onMouseMove = (event: MouseEvent) => {
         if (sparklineRef === undefined) return;
-        xPosition = Math.max(0, event.clientX - sparklineRef.getBoundingClientRect().left);
+
+		const chartPos = Math.max(0, event.clientX - sparklineRef.getBoundingClientRect().left);
+		if (snapPoint) {
+			// Grabs the closest point to the mouse position (TODO: we should probably take this out of the if statement for value binding)
+			const xVal = invert(bounds.minX, bounds.maxX, width, chartPos);
+			const idx = bisectCenter(xs, xVal);
+			const point = points[idx];
+			// Based on the point, calculate mouse position of actual point and snap to it.
+			const xRange = bounds.maxX - bounds.minX;
+			const xRatio = (point.x - bounds.minX) / xRange;
+			let pointXPos = xRatio * (width - PADDING * 2) + PADDING;
+			// Additional data for focusPoint
+			const yRange = bounds.maxY - bounds.minY;
+			const yRatio = (point.y - bounds.minY) / yRange;
+			const pointYPos = height - yRatio * height;
+			// Adjust position to prevent the line from being completely hidden
+			if (pointXPos === width) {
+				pointXPos -= 1;
+			}
+			xPosition = pointXPos;
+			focusedPoint = { x: pointXPos, y: pointYPos };
+		} else {
+			xPosition = chartPos
+		}
     };
 </script>
 
@@ -120,10 +151,14 @@
 			stroke-linejoin="round"
 			fill="none"
 		/>
+
+		{#if showScrubber && snapPoint && focusedPoint !== undefined}
+			<circle fill={strokeColor} cx={focusedPoint.x} cy={focusedPoint.y} r={STROKE_WIDTH * 2}></circle>
+		{/if}
 		<path fill="url(#{FILL_PATTERN_ID})" d={closePath(path, width, height)} />
 	</svg>
 
-	<LineScrub color={strokeColor} {height} show={showScrubber} xPosition={xPosition} />
+	<LineScrub color={strokeColor} {height} show={showScrubber} showMask={!snapPoint} xPosition={xPosition} />
 </div>
 
 <style>

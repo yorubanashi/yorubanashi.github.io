@@ -71,5 +71,24 @@
 			{ "time": "30:00", "mile": 2.68 },
 			{ "time": "33:00", "mile": 2.97 }
 		]
+	},
+	{
+		"date": "2025-08-04",
+		"times": [
+			{ "time": "10:21", "mile": 1 },
+			{ "time": "21:45", "mile": 2 },
+			{ "time": "30:00", "mile": 2.61 },
+			{ "time": "34:37", "mile": 3 }
+		]
+	},
+	{
+		"date": "2025-08-07",
+		"times": [
+			{ "time": "10:29", "mile": 1 },
+			{ "time": "21:48", "mile": 2 },
+			{ "time": "30:00", "mile": 2.64 },
+			{ "time": "33:32", "mile": 3 }
+		],
+		"notes": "Bit of a hard day. Stuffy nose, and legs still sore from leg day."
 	}
 ]

@@ -1,4 +1,3 @@
-<!-- TODO: Make navigation menu recursive / any functions that use "dir" -->
 <script lang="ts">
 	import { afterNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
