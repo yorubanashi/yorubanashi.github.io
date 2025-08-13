@@ -1,20 +1,20 @@
 // Hastily in-sync with the Go server structs.
 
-export interface Link {
+export type Link = {
 	addr: string;
 	name: string;
-}
+};
 
-export interface Dir {
+export type Dir = {
 	dirs: { [name: string]: Dir };
 	link: Link;
-}
+};
 
-export interface SvelteWalkRequest {
+export type SvelteWalkRequest = {
 	lang: string;
-}
+};
 
-export interface SvelteWalkResponse {
+export type SvelteWalkResponse = {
 	dir: Dir;
 	error: string;
-}
+};

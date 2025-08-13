@@ -1,7 +1,7 @@
 <!-- Exercise -->
 
 <script lang="ts">
-	import type { Point } from '$lib/types/Sparkline';
+	import { type Point, type PointsWithHeader, NewPointsWithHeader } from '$lib/types/Sparkline';
 	import SparklineWithHeader from '$lib/components/graphs/SparklineWithHeader/index.svelte';
 
 	interface MileTime {
@@ -55,17 +55,22 @@
 		});
 	};
 
-	let currentPoints = $state<Point[]>(dataToPoints(milesRun));
+	const pointsMap = (): Map<string, PointsWithHeader> => {
+		const map = new Map<string, PointsWithHeader>();
+		map.set(
+			'Miles',
+			NewPointsWithHeader(dataToPoints(milesRun), (str: string) => {
+				return `${str} miles`;
+			})
+		);
+		map.set(
+			'AVP',
+			NewPointsWithHeader(dataToPoints(averagePace), (str: string) => {
+				return `${parseFloat(str).toFixed(2).toString()}↗ mph`;
+			})
+		);
+		return map;
+	};
 </script>
 
-<button
-	onclick={() => {
-		currentPoints = dataToPoints(milesRun);
-	}}>Miles Run</button
->
-<button
-	onclick={() => {
-		currentPoints = dataToPoints(averagePace);
-	}}>Average Pace</button
->
-<SparklineWithHeader points={currentPoints} />
+<SparklineWithHeader pointsMap={pointsMap()} />

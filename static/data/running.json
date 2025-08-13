@@ -90,5 +90,13 @@
 			{ "time": "33:32", "mile": 3 }
 		],
 		"notes": "Bit of a hard day. Stuffy nose, and legs still sore from leg day."
+	},
+	{
+		"date": "2025-08-10",
+		"times": [
+			{ "time": "09:55", "mile": 1 },
+			{ "time": "21:05", "mile": 2 },
+			{ "time": "29:00", "mile": 2.64 }
+		]
 	}
 ]

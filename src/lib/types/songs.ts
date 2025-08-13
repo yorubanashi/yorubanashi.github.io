@@ -1,29 +1,29 @@
 // Hastily in-sync with the Go server structs.
 
-export interface Line {
+export type Line = {
 	pri: string;
 	sec: string;
 	rom: string;
 	eng: string;
-}
+};
 
-export interface Verse {
+export type Verse = {
 	lines: Line[];
-}
+};
 
-export interface Song {
+export type Song = {
 	title: string;
 	artist: string;
 	verses: Verse[];
-}
+};
 
-export interface SongRequest {
+export type SongRequest = {
 	language: string;
 	title?: string;
 	artist?: string;
-}
+};
 
-export interface SongResponse {
+export type SongResponse = {
 	songs: Song[];
 	error: string;
-}
+};

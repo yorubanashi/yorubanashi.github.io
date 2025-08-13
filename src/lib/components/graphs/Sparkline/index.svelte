@@ -6,20 +6,24 @@
 	import LineScrub from './LineScrub.svelte';
 	import {
 		FILL_PATTERN_ID,
-		PADDING,
+		PADDING_X,
+		PADDING_Y,
 		STROKE_WIDTH,
 		TRANSITION_DURATION
 	} from '$lib/consts/Sparkline';
 	import { bisectCenter, invert } from '$lib/d3/array';
 	import { interpolateColor } from '$lib/d3/interpolate';
-	import { calculateBounds, calculateColor, calculatePath, closePath } from '$lib/d3/path';
+	import { calculateBounds, calculateColor, calculateCoords, calculatePath, closePath } from '$lib/d3/path';
 	import { type Point } from '$lib/types/Sparkline';
 
 	interface Props {
 		points: Point[];
+		selectedIdx: number;
+
+		snapPoint?: boolean;
 	}
-	let { points }: Props = $props();
-	let bounds = $derived(calculateBounds(points));
+	let { points, selectedIdx = $bindable(), snapPoint = true }: Props = $props();
+	let bounds = $derived(calculateBounds(points, PADDING_Y));
 	let xs = $derived(points.map((point) => point.x));
 
 	let path = $state<string>('');
@@ -34,7 +38,7 @@
 
 		untrack(() => {
 			if (isFirstRender) {
-				path = calculatePath(points, bounds, width, height, PADDING);
+				path = calculatePath(points, bounds, width, height, PADDING_X);
 				strokeColor = calculateColor(bounds);
 				isFirstRender = false;
 			} else {
@@ -53,7 +57,7 @@
 		const start = Date.now();
 		const interpolateFunc = interpolatePath(
 			path,
-			calculatePath(points, bounds, width, height, PADDING)
+			calculatePath(points, bounds, width, height, PADDING_X)
 		);
 
 		const currColor = strokeColor;
@@ -71,7 +75,7 @@
 				animationID = requestAnimationFrame(animate);
 			} else {
 				// Once progress is at 100%, set path to final path that was just passed in.
-				path = calculatePath(points, bounds, width, height, PADDING);
+				path = calculatePath(points, bounds, width, height, PADDING_X);
 				strokeColor = nextColor;
 			}
 		};
@@ -80,11 +84,9 @@
 		animationID = requestAnimationFrame(animate);
 	};
 
-	// Scrub handlers: maybe we should have another element to wrap this one?
 	let focusedPoint = $state<Point>();
+	// Scrub handlers: maybe we should have a dedicated Svelte component wrap this one?
 	let showScrubber = $state(false);
-	// TODO: Make this configurable
-	let snapPoint = $state(false);
 	let sparklineRef = $state<HTMLDivElement>();
 	let xPosition = $state(0);
 	const onMouseEnter = () => {
@@ -92,30 +94,24 @@
 	};
 	const onMouseLeave = () => {
 		showScrubber = false;
+		selectedIdx = points.length - 1;
 	};
 	const onMouseMove = (event: MouseEvent) => {
-		if (sparklineRef === undefined) return;
+		if (sparklineRef === undefined || points.length === 0) return;
 
 		const chartPos = Math.max(0, event.clientX - sparklineRef.getBoundingClientRect().left);
+		const xVal = invert(bounds.minX, bounds.maxX, width, chartPos);
+		const idx = bisectCenter(xs, xVal);
+		selectedIdx = idx;
+
 		if (snapPoint) {
-			// Grabs the closest point to the mouse position (TODO: we should probably take this out of the if statement for value binding)
-			const xVal = invert(bounds.minX, bounds.maxX, width, chartPos);
-			const idx = bisectCenter(xs, xVal);
 			const point = points[idx];
-			// Based on the point, calculate mouse position of actual point and snap to it.
-			const xRange = bounds.maxX - bounds.minX;
-			const xRatio = (point.x - bounds.minX) / xRange;
-			let pointXPos = xRatio * (width - PADDING * 2) + PADDING;
-			// Additional data for focusPoint
-			const yRange = bounds.maxY - bounds.minY;
-			const yRatio = (point.y - bounds.minY) / yRange;
-			const pointYPos = height - yRatio * height;
-			// Adjust position to prevent the line from being completely hidden
-			if (pointXPos === width) {
-				pointXPos -= 1;
+			const coords = calculateCoords(point, bounds, width, height, PADDING_X);
+			if (coords.x === width) {
+				coords.x -= PADDING_X;
 			}
-			xPosition = pointXPos;
-			focusedPoint = { x: pointXPos, y: pointYPos };
+			xPosition = coords.x;
+			focusedPoint = { x: coords.x, y: coords.y };
 		} else {
 			xPosition = chartPos;
 		}
