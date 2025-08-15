@@ -66,7 +66,7 @@
 		map.set(
 			'AVP',
 			NewPointsWithHeader(dataToPoints(averagePace), (str: string) => {
-				return `${parseFloat(str).toFixed(2).toString()}↗ mph`;
+				return `${parseFloat(str).toFixed(2).toString()} mph`;
 			})
 		);
 		return map;

@@ -35,8 +35,16 @@ input[type='text'] {
 	display: flex;
 }
 
+.gap-4 {
+	gap: 4px;
+}
+
 .align-center {
 	align-items: center;
+}
+
+.flex-end {
+	align-items: flex-end;
 }
 
 .justify-between {

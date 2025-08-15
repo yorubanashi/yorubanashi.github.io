@@ -13,7 +13,13 @@
 	} from '$lib/consts/Sparkline';
 	import { bisectCenter, invert } from '$lib/d3/array';
 	import { interpolateColor } from '$lib/d3/interpolate';
-	import { calculateBounds, calculateColor, calculateCoords, calculatePath, closePath } from '$lib/d3/path';
+	import {
+		calculateBounds,
+		calculateColor,
+		calculateCoords,
+		calculatePath,
+		closePath
+	} from '$lib/d3/path';
 	import { type Point } from '$lib/types/Sparkline';
 
 	interface Props {

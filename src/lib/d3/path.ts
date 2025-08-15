@@ -42,7 +42,7 @@ export const calculateCoords = (
 	const yRatio = (point.y - bounds.minY) / yRange;
 	const y = height - yRatio * height;
 	return { x: x + padding, y };
-}
+};
 
 export const calculatePath = (
 	points: Point[],

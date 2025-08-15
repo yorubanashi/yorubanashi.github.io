@@ -98,5 +98,14 @@
 			{ "time": "21:05", "mile": 2 },
 			{ "time": "29:00", "mile": 2.64 }
 		]
+	},
+	{
+		"date": "2025-08-13",
+		"times": [
+			{ "time": "10:46", "mile": 1 },
+			{ "time": "21:55", "mile": 2 },
+			{ "time": "30:00", "mile": 2.58 }
+		],
+		"notes": "Honestly, had to drive both ways, no wife, it was a bit of a sad one. And EDM wasn't hitting..."
 	}
 ]
