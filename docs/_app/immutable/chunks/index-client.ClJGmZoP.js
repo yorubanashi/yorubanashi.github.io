@@ -1,0 +1,1 @@
+import{m as e,o as t,u as c}from"./runtime.ChjVoDqp.js";function u(o){throw new Error("lifecycle_outside_component")}function r(o){e===null&&u(),t(()=>{const n=c(o);if(typeof n=="function")return n})}export{r as o};
