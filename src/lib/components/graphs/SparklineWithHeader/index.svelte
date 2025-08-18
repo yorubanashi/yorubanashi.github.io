@@ -7,6 +7,8 @@
 		type StringInterpolator,
 		StrokeColor
 	} from '$lib/types/Sparkline';
+	import Arrow from './Arrow.svelte';
+	import DateMarker from './DateMarker.svelte';
 
 	// Planning:
 	// - Tooltip for timeframe
@@ -19,12 +21,18 @@
 	let selectedInterpolator = $state<StringInterpolator>(() => {
 		return '';
 	});
-	let selectedIdx = $state(-1);
 	let selectedKey = $state<string>('');
+	// Metadata about the data point that is currently selected/hovered/focused.
+	let selectedTime = $state<number>(0);
 	let shownValue = $state<string>('');
 	let diff = $state<number>(0);
 	let difference = $state<string>('');
-	let diffColor = $state<string>('');
+
+	// Binded state w/ Sparkline
+	let width = $state(0);
+	let selectedIdx = $state(-1);
+	let showScrubber = $state(false);
+	let xPosition = $state(0);
 
 	// Effect 1: Set selectedPoints to the first list when pointsMap is loaded.
 	$effect(() => {
@@ -44,6 +52,9 @@
 	// Effect 3: When selectedIdx is a real value, use it to access the array.
 	$effect(() => {
 		if (selectedIdx === -1) return;
+		// DREAM: Fix hack to prevent DateMarker from showing the latest date during the ease-out transition
+		if (showScrubber === true) selectedTime = selectedPoints[selectedIdx].x;
+
 		const selectedY = selectedPoints[selectedIdx].y;
 		shownValue = selectedY.toString();
 
@@ -77,67 +88,7 @@
 		<div class="chartValue">{selectedInterpolator(shownValue)}</div>
 
 		<div class="flex flex-end" style={`color: ${getDiffColor()}`}>
-			{#if diff > 0}
-				<svg class="arrow" width="18" height="18" viewBox="0 0 60 60">
-					<line
-						x1="20"
-						y1="40"
-						x2="45"
-						y2="15"
-						stroke={StrokeColor.StockGreen}
-						stroke-width="5"
-						stroke-linecap="round"
-					></line>
-					<line
-						x1="25"
-						y1="15"
-						x2="45"
-						y2="15"
-						stroke={StrokeColor.StockGreen}
-						stroke-width="5"
-						stroke-linecap="round"
-					></line>
-					<line
-						x1="45"
-						y1="35"
-						x2="45"
-						y2="15"
-						stroke={StrokeColor.StockGreen}
-						stroke-width="5"
-						stroke-linecap="round"
-					></line>
-				</svg>
-			{:else if diff < 0}
-				<svg class="arrow" width="18" height="18" viewBox="0 0 60 60">
-					<line
-						x1="20"
-						y1="15"
-						x2="45"
-						y2="40"
-						stroke={StrokeColor.StockRed}
-						stroke-width="5"
-						stroke-linecap="round"
-					></line>
-					<line
-						x1="25"
-						y1="40"
-						x2="45"
-						y2="40"
-						stroke={StrokeColor.StockRed}
-						stroke-width="5"
-						stroke-linecap="round"
-					></line>
-					<line
-						x1="45"
-						y1="20"
-						x2="45"
-						y2="40"
-						stroke={StrokeColor.StockRed}
-						stroke-width="5"
-						stroke-linecap="round"
-					></line>
-				</svg>
-			{/if}
+			<Arrow {diff} />
 			<div class="difference">{difference}</div>
 		</div>
 	</div>
@@ -153,20 +104,26 @@
 	</div>
 </div>
 
-<Sparkline points={selectedPoints} bind:selectedIdx snapPoint={true} />
+<DateMarker date={selectedTime} chartWidth={width} show={showScrubber} {xPosition} />
+
+<Sparkline
+	points={selectedPoints}
+	snapPoint={true}
+	bind:width
+	bind:selectedIdx
+	bind:showScrubber
+	bind:xPosition
+/>
 
 <style>
 	.header {
 		align-items: flex-end;
+		padding-bottom: 8px;
 	}
 
 	.chartValue {
-		font-size: 1.75rem;
+		font-size: 2rem;
 		line-height: 1;
-	}
-
-	.arrow {
-		margin-right: 0.125rem;
 	}
 
 	.difference {

@@ -34,6 +34,7 @@
 		color: inherit;
 		font: inherit;
 		font-size: 0.875rem;
+		font-weight: 600;
 
 		border-radius: 0.5rem;
 		padding: 0.5rem 1rem;

@@ -24,20 +24,32 @@
 
 	interface Props {
 		points: Point[];
-		selectedIdx: number;
-
 		snapPoint?: boolean;
+
+		// Bindable properties for SparklineWithHeader
+		width?: number;
+		selectedIdx?: number;
+		showScrubber?: boolean;
+		xPosition?: number;
 	}
-	let { points, selectedIdx = $bindable(), snapPoint = true }: Props = $props();
+	let {
+		points,
+		snapPoint = true,
+		width = $bindable(0),
+		selectedIdx = $bindable(),
+		showScrubber = $bindable(false),
+		xPosition = $bindable(0)
+	}: Props = $props();
 	let bounds = $derived(calculateBounds(points, PADDING_Y));
 	let xs = $derived(points.map((point) => point.x));
 
 	let path = $state<string>('');
 	let strokeColor = $state<string>('');
 
-	let width: number = $state(0);
+	// let width: number = $state(0);
 	let height: number = $state(0);
 
+	// DREAM: Redraw paths when browser is resized
 	let isFirstRender = $state(true);
 	$effect(() => {
 		if (points.length === 0) return;
@@ -91,10 +103,8 @@
 	};
 
 	let focusedPoint = $state<Point>();
-	// Scrub handlers: maybe we should have a dedicated Svelte component wrap this one?
-	let showScrubber = $state(false);
+	// DREAM: Scrub handlers: maybe we should have a dedicated Svelte component wrap this one?
 	let sparklineRef = $state<HTMLDivElement>();
-	let xPosition = $state(0);
 	const onMouseEnter = () => {
 		showScrubber = true;
 	};
@@ -160,6 +170,7 @@
 </div>
 
 <style>
+	/* DREAM: Adjustable height and width? */
 	#sparkline {
 		position: relative;
 		height: 320px;
