@@ -1,3 +1,6 @@
+# The usual stuff...
 .DS_Store
 node_modules
 
+# NextJS
+next-env.d.ts
